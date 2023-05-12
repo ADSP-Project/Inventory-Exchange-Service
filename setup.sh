@@ -15,9 +15,16 @@ curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-# Create cluster
-k3d cluster create -p 8080:30001@agent:0 --agents 1
-
-# Deploy application on cluster
+# Create cluster & deploy sock shop
+k3d cluster create sock-shop -p 8080:30001@agent:0 --agents 1
 kubectl create namespace sock-shop
 kubectl apply -f socks-shop/deploy/kubernetes/complete-demo.yaml
+
+# Create cluster & deploy onlineboutique
+k3d cluster create onlineboutique -p 8081:32541@agent:0 --agents 1
+k3d kubeconfig merge --all --kubeconfig-merge-default
+kubectl config use-context k3d-onlineboutique
+kubectl apply -f ./onlineboutique/release/kubernetes-manifests.yaml
+
+#kubectl config get-contexts
+
