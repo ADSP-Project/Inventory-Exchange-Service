@@ -22,7 +22,7 @@ kubectl apply -f socks-shop/deploy/kubernetes/complete-demo.yaml
 
 # Create cluster & deploy onlineboutique
 k3d cluster create onlineboutique -p 8081:32541@agent:0 --agents 1
-k3d kubeconfig merge --all --kubeconfig-merge-default
+k3d kubeconfig merge onlineboutique --kubeconfig-merge-default
 kubectl config use-context k3d-onlineboutique
 kubectl apply -f ./onlineboutique/release/kubernetes-manifests.yaml
 
