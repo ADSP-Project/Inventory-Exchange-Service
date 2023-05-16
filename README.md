@@ -32,5 +32,4 @@ if you are running locally:
   
 socket-shop localhost:8080
   
-onlineboutique localhost:8080
-
+onlineboutique localhost:8081
