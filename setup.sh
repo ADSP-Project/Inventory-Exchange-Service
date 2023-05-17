@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Install Docker
-#sudo apt-get update
-#curl -fsSL https://get.docker.com -o get-docker.sh
-#sudo sh get-docker.sh
+
+sudo apt-get update
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
 
 # Install k3s
 curl -sfL https://get.k3s.io | sh -
