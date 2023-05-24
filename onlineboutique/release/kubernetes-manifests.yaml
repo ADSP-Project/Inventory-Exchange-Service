@@ -857,3 +857,59 @@ spec:
     port: 9555
     targetPort: 9555
 # [END gke_release_kubernetes_manifests_microservices_demo]
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apiservice
+spec:
+  selector:
+    matchLabels:
+      app: apiservice
+  template:
+    metadata:
+      labels:
+        app: apiservice
+    spec:
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: server
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+          image: gcr.io/google-samples/microservices-demo/apiservice:v0.6.0
+          ports:
+          - containerPort: 8000
+          env:
+          - name: PORT
+            value: "8000"
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apiservice
+spec:
+  type: ClusterIP
+  selector:
+    app: apiservice
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000
