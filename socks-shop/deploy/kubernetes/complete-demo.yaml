@@ -205,6 +205,29 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: nextjs-docker
+  labels:
+    name: nextjs-docker
+  namespace: sock-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nextjs-docker
+  template:
+    metadata:
+      labels:
+        name: nextjs-docker
+    spec:
+      containers:
+      - name: nextjs-docker
+        image: freefreep/nextjs-docker:latest
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: catalogue-db
   labels:
     name: catalogue-db
