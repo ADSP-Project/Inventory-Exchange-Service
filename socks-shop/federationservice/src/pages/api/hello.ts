@@ -29,6 +29,5 @@ export default function handler(
       console.log('Connection established');
       res.status(200).json(rows)
     });
-    res.status(200).json({ name: 'John Doe' })
   }
 }
