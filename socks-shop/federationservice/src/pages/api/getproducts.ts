@@ -21,13 +21,14 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'GET') {
-    connection.query('SELECT * FROM sock', (err, rows) => {
-      if (err) {
-        console.log('Error connecting to DB: ', err);
+    connection.query('SELECT * FROM `sock`', function (error, results) {
+      if (error) {
+        console.log('Error connecting to DB: ', error);
         return;
       }
       console.log('Connection established');
-      res.status(200).json(rows)
+      res.status(200).json(results)
     });
+
   }
 }
