@@ -18,7 +18,6 @@ type Data = {
 // | image_url_2 | varchar(40)  | YES  |     | NULL    |       |
 
 const Socks = z.object({
-    sock_id: z.string(),
     name: z.string(),
     description: z.string(),
     price: z.number(),
@@ -34,13 +33,13 @@ export default function handler(
 ) {
   if (req.method === 'POST') {
     const socks = Socks.parse(req.body);
-    connection.query('INSERT INTO sock (sock_id, name, description, price, count, image_url_1, image_url_2) VALUES ?', [socks.map((sock) => [sock.sock_id, sock.name, sock.description, sock.price, sock.count, sock.image_url_1, sock.image_url_2])], (err, rows) => {
+    connection.query('INSERT INTO sock (name, description, price, count, image_url_1, image_url_2) VALUES ?', [socks.map((sock) => [sock.name, sock.description, sock.price, sock.count, sock.image_url_1, sock.image_url_2])], (err, rows) => {
       if (err) {
         console.log('Error connecting to DB: ', err);
         return;
       }
-      console.log('Connection established');
-      res.status(200).json(rows)
+      console.log('Intserted socks: ', socks);
+      res.status(200)
     });
   }
 }
