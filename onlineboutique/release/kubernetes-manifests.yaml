@@ -886,12 +886,12 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: gcr.io/google-samples/microservices-demo/apiservice:v0.6.0
+          image: apiservice
           ports:
-          - containerPort: 8000
+          - containerPort: 9090
           env:
           - name: PORT
-            value: "8000"
+            value: "9090"
 
           resources:
             requests:
@@ -911,5 +911,5 @@ spec:
     app: apiservice
   ports:
   - name: http
-    port: 80
-    targetPort: 8000
+    port: 9090
+    targetPort: 9090
