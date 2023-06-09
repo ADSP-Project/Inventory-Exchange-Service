@@ -2,7 +2,7 @@
 FROM golang:1.20.4
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /src
 
 # Copy the Go module files and download dependencies
 COPY go.mod go.sum ./

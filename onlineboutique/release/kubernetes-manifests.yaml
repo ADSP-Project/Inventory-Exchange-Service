@@ -886,7 +886,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: apiservice
+          image: filippa/apiservice:latest
           ports:
           - containerPort: 9090
           env:
