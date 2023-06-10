@@ -17,7 +17,7 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Create cluster & deploy sock shop
-k3d cluster create sock-shop -p 8080:30001@agent:0 --agents 1
+k3d cluster create sock-shop -p 8080:30001@agent:0 -p 8083:30000@agent:0 --agents 1
 kubectl create namespace sock-shop
 kubectl apply -f socks-shop/deploy/kubernetes/complete-demo.yaml
 
