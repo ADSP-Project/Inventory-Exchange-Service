@@ -857,59 +857,40 @@ spec:
     port: 9555
     targetPort: 9555
 # [END gke_release_kubernetes_manifests_microservices_demo]
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: apiservice
+  labels:
+    name: apiservice
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: apiservice
+      name: apiservice
   template:
     metadata:
       labels:
-        app: apiservice
+        name: apiservice
     spec:
-      serviceAccountName: default
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
       containers:
-        - name: server
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            privileged: false
-            readOnlyRootFilesystem: true
-          image: filippa/apiservice:latest
-          ports:
-          - containerPort: 9090
-          env:
-          - name: PORT
-            value: "9090"
-
-          resources:
-            requests:
-              cpu: 100m
-              memory: 64Mi
-            limits:
-              cpu: 200m
-              memory: 128Mi
+      - name: apiservice
+        image: freefreep/apiservice:latest
+      nodeSelector:
+        beta.kubernetes.io/os: linux
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: apiservice
+  labels:
+    name: apiservice
 spec:
-  type: ClusterIP
-  selector:
-    app: apiservice
+  type: NodePort
   ports:
-  - name: http
-    port: 9090
+  - port: 80
     targetPort: 9090
+    nodePort: 32540
+  selector:
+    name: apiservice
