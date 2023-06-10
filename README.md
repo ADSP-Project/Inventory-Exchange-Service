@@ -31,6 +31,13 @@ onlineboutique YOUR-EXTERN-IP-ADRESS:8081
 
 if you are running locally:
   
-socket-shop localhost:8080
+sock-shop localhost:8080
   
 onlineboutique localhost:8081
+
+
+Get Products of shops
+
+sock-shop: curl localhost:8083/api/getproducts
+
+onlineboutique: localhost:8082/products
