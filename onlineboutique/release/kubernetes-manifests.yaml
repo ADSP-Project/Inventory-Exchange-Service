@@ -857,3 +857,40 @@ spec:
     port: 9555
     targetPort: 9555
 # [END gke_release_kubernetes_manifests_microservices_demo]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apiservice
+  labels:
+    name: apiservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: apiservice
+  template:
+    metadata:
+      labels:
+        name: apiservice
+    spec:
+      containers:
+      - name: apiservice
+        image: freefreep/apiservice:latest
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apiservice
+  labels:
+    name: apiservice
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 9090
+    nodePort: 32540
+  selector:
+    name: apiservice
