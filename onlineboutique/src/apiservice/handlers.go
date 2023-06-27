@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 func (fe *apiServer) productsHandler(w http.ResponseWriter, r *http.Request) {
