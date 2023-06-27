@@ -1,21 +1,28 @@
-# Start from the official Golang image with a specific version
-FROM golang:1.20.4
-
-# Set the working directory inside the container
+FROM golang:1.20.4-alpine as builder
+RUN apk add --no-cache ca-certificates git
+RUN apk add build-base
 WORKDIR /src
 
-# Copy the Go module files and download dependencies
+# restore dependencies
 COPY go.mod go.sum ./
 RUN go mod download
-
-# Copy the rest of the application source code
 COPY . .
 
-# Build the Go application
-RUN go build -o main .
+# Skaffold passes in debug-oriented compiler flags
+ARG SKAFFOLD_GO_GCFLAGS
+RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/bin/apiservice .
 
-# Expose port 9090
+FROM alpine:3.18.0@sha256:02bb6f428431fbc2809c5d1b41eab5a68350194fb508869a33cb1af4444c9b11 as release
+RUN apk add --no-cache ca-certificates \
+    busybox-extras net-tools bind-tools
+WORKDIR /src
+COPY --from=builder /go/bin/apiservice /src/server
+COPY shops.json .
+
+# Definition of this variable is used by 'skaffold debug' to identify a golang binary.
+# Default behavior - a failure prints a stack trace for the current goroutine.
+# See https://golang.org/pkg/runtime/
+ENV GOTRACEBACK=single
+
 EXPOSE 9090
-
-# Set the entry point for the container
-CMD ["./main"]
+ENTRYPOINT ["/src/server"]
