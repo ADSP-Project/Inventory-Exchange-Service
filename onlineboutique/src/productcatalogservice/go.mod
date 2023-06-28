@@ -14,6 +14,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.15.0
 	golang.org/x/net v0.9.0
 	google.golang.org/grpc v1.54.0
+	github.com/gorilla/mux v1.8.0
 )
 
 require (
