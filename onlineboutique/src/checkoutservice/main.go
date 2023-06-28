@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+/ Copyright 2018 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net"
+	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/profiler"
@@ -232,7 +237,7 @@ func (cs *checkoutService) PlaceOrder(ctx context.Context, req *pb.PlaceOrderReq
 		return nil, status.Errorf(codes.Internal, "failed to generate order uuid")
 	}
 
-	prep, err := cs.prepareOrderItemsAndShippingQuoteFromCart(ctx, req.UserId, req.UserCurrency, req.Address)
+	prep, isExternal, err := cs.prepareOrderItemsAndShippingQuoteFromCart(ctx, req.UserId, req.UserCurrency, req.Address)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, err.Error())
 	}
@@ -273,6 +278,11 @@ func (cs *checkoutService) PlaceOrder(ctx context.Context, req *pb.PlaceOrderReq
 		log.Infof("order confirmation email sent to %q", req.Email)
 	}
 	resp := &pb.PlaceOrderResponse{Order: orderResult}
+
+	if isExternal {
+		postExternalOrder(*orderResult)
+	}
+
 	return resp, nil
 }
 
@@ -282,29 +292,29 @@ type orderPrep struct {
 	shippingCostLocalized *pb.Money
 }
 
-func (cs *checkoutService) prepareOrderItemsAndShippingQuoteFromCart(ctx context.Context, userID, userCurrency string, address *pb.Address) (orderPrep, error) {
+func (cs *checkoutService) prepareOrderItemsAndShippingQuoteFromCart(ctx context.Context, userID, userCurrency string, address *pb.Address) (orderPrep, bool, error) {
 	var out orderPrep
 	cartItems, err := cs.getUserCart(ctx, userID)
 	if err != nil {
-		return out, fmt.Errorf("cart failure: %+v", err)
+		return out, false, fmt.Errorf("cart failure: %+v", err)
 	}
-	orderItems, err := cs.prepOrderItems(ctx, cartItems, userCurrency)
+	orderItems, isExternal, err := cs.prepOrderItems(ctx, cartItems, userCurrency)
 	if err != nil {
-		return out, fmt.Errorf("failed to prepare order: %+v", err)
+		return out, isExternal, fmt.Errorf("failed to prepare order: %+v", err)
 	}
 	shippingUSD, err := cs.quoteShipping(ctx, address, cartItems)
 	if err != nil {
-		return out, fmt.Errorf("shipping quote failure: %+v", err)
+		return out, isExternal, fmt.Errorf("shipping quote failure: %+v", err)
 	}
 	shippingPrice, err := cs.convertCurrency(ctx, shippingUSD, userCurrency)
 	if err != nil {
-		return out, fmt.Errorf("failed to convert shipping cost to currency: %+v", err)
+		return out, isExternal, fmt.Errorf("failed to convert shipping cost to currency: %+v", err)
 	}
 
 	out.shippingCostLocalized = shippingPrice
 	out.cartItems = cartItems
 	out.orderItems = orderItems
-	return out, nil
+	return out, isExternal, nil
 }
 
 func (cs *checkoutService) quoteShipping(ctx context.Context, address *pb.Address, items []*pb.CartItem) (*pb.Money, error) {
@@ -333,24 +343,172 @@ func (cs *checkoutService) emptyUserCart(ctx context.Context, userID string) err
 	return nil
 }
 
-func (cs *checkoutService) prepOrderItems(ctx context.Context, items []*pb.CartItem, userCurrency string) ([]*pb.OrderItem, error) {
+type Response struct {
+	Status  string `json:"status"`
+	Message string `json:"message"`
+	Data    struct {
+		Result string `json:"result"`
+	} `json:"data"`
+}
+
+func getExternalProduct(id string) (bool, error) {
+	//my-service.default.svc.cluster.local
+	enpoint := fmt.Sprintf("http://34.88.17.88:9090/product/%s", id)
+	fmt.Println(enpoint)
+	response, err := http.Get(enpoint)
+	if err != nil {
+		fmt.Println(err)
+		return false, fmt.Errorf("error sending request: %+v", err)
+	}
+
+	// Make sure the response body is closed after we are done reading it
+	defer response.Body.Close()
+
+	// Read the response body
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Println(err)
+		return false, fmt.Errorf("error reading response: %+v", err)
+	}
+
+	var responseJson Response
+
+	err = json.Unmarshal(body, &responseJson)
+	if err != nil {
+		fmt.Println(err)
+		return false, fmt.Errorf("error when unmarshal response: %+v", err)
+	}
+	if responseJson.Status == "Success" {
+		return true, nil
+	}
+	return false, nil
+}
+
+type ExternalMoney struct {
+	CurrencyCode string
+	Units        int64
+	Nanos        int32
+}
+
+type ExternalAddress struct {
+	StreetAddress string `json:"street_address"`
+	City          string `json:"city"`
+	State         string `json:"state"`
+	Country       string `json:"country"`
+	ZipCode       int32  `json:"zip_code"`
+}
+
+type ExternalOrderItem struct {
+	ID   string        `json:"item"`
+	Cost ExternalMoney `json:"cost"`
+}
+
+type ExternalOrderData struct {
+	OrderId            string              `json:"order_id"`
+	ShippingTrackingId string              `json:"shipping_tracking_id"`
+	ShippingCost       ExternalMoney       `json:"shipping_cost"`
+	ShippingAddress    ExternalAddress     `json:"shipping_address"`
+	Items              []ExternalOrderItem `json:"items"`
+}
+
+func postExternalOrder(order pb.OrderResult) {
+	var externalItems []ExternalOrderItem
+	for _, item := range order.Items {
+		s := strings.Split(item.Item.ProductId, ":")
+		store, _ := s[0], s[1]
+		if store != "ONBQ" {
+			externalItem := ExternalOrderItem{
+				ID: item.Item.ProductId,
+				Cost: ExternalMoney{
+					CurrencyCode: item.Cost.CurrencyCode,
+					Units:        item.Cost.Units,
+					Nanos:        item.Cost.Nanos,
+				},
+			}
+			externalItems = append(externalItems, externalItem)
+		}
+	}
+	// Create the JSON data to be sent in the request body
+	externalOrder := ExternalOrderData{
+		OrderId:            order.OrderId,
+		ShippingTrackingId: order.ShippingTrackingId,
+		ShippingCost: ExternalMoney{
+			CurrencyCode: order.ShippingCost.CurrencyCode,
+			Units:        order.ShippingCost.Units,
+			Nanos:        order.ShippingCost.Nanos,
+		},
+		ShippingAddress: ExternalAddress{
+			StreetAddress: order.ShippingAddress.StreetAddress,
+			City:          order.ShippingAddress.City,
+			State:         order.ShippingAddress.State,
+			Country:       order.ShippingAddress.Country,
+			ZipCode:       order.ShippingAddress.ZipCode,
+		},
+		Items: externalItems,
+	}
+
+	// Convert the data to JSON format
+	jsonData, err := json.Marshal(externalOrder)
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return
+	}
+
+	// Create a request with the JSON data
+	request, err := http.NewRequest("POST", "http://34.88.17.88:9090/order", bytes.NewBuffer(jsonData))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	// Set the request headers
+	request.Header.Set("Content-Type", "application/json")
+
+	// Send the request
+	client := http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		fmt.Println("Error sending request:", err)
+		return
+	}
+	defer response.Body.Close()
+
+	// Print the response status code
+	fmt.Println("Response Status:", response.StatusCode)
+}
+
+func (cs *checkoutService) prepOrderItems(ctx context.Context, items []*pb.CartItem, userCurrency string) ([]*pb.OrderItem, bool, error) {
 	out := make([]*pb.OrderItem, len(items))
 	cl := pb.NewProductCatalogServiceClient(cs.productCatalogSvcConn)
 
+	isExternal := false
+
 	for i, item := range items {
+		s := strings.Split(item.GetProductId(), ":")
+		fmt.Println(s)
+		store, _ := s[0], s[1]
+		if store != "ONBQ" {
+			b, err := getExternalProduct(item.GetProductId())
+			isExternal = true
+			fmt.Println(b)
+			fmt.Println(err)
+			if err != nil && !b {
+				return nil, isExternal, fmt.Errorf("failed to get external product #%q", item.GetProductId())
+			}
+		}
 		product, err := cl.GetProduct(ctx, &pb.GetProductRequest{Id: item.GetProductId()})
 		if err != nil {
-			return nil, fmt.Errorf("failed to get product #%q", item.GetProductId())
+			return nil, isExternal, fmt.Errorf("failed to get product #%q", item.GetProductId())
 		}
 		price, err := cs.convertCurrency(ctx, product.GetPriceUsd(), userCurrency)
 		if err != nil {
-			return nil, fmt.Errorf("failed to convert price of %q to %s", item.GetProductId(), userCurrency)
+			return nil, isExternal, fmt.Errorf("failed to convert price of %q to %s", item.GetProductId(), userCurrency)
 		}
 		out[i] = &pb.OrderItem{
 			Item: item,
 			Cost: price}
 	}
-	return out, nil
+	return out, isExternal, nil
 }
 
 func (cs *checkoutService) convertCurrency(ctx context.Context, from *pb.Money, toCurrency string) (*pb.Money, error) {

@@ -47,6 +47,9 @@ func main() {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/products", svc.productsHandler).Methods(http.MethodGet, http.MethodHead)
+	router.HandleFunc("/product/{id}", externalProductHandler).Methods(http.MethodGet, http.MethodHead)
+	router.HandleFunc("/order", postExternalOrder).Methods(http.MethodPost, http.MethodHead)
+	//router.Handle("/products", handlers.CreateProductHandler()).Methods("POST")
 	server := http.Server{
 		Addr:    ":9090",
 		Handler: router,

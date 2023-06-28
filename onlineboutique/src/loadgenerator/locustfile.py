@@ -18,15 +18,16 @@ import random
 from locust import HttpUser, TaskSet, between
 
 products = [
-    '0PUK6V6EV0',
-    '1YMWWN1N4O',
-    '2ZYFJ3GM2N',
-    '66VCHSJNUP',
-    '6E92ZMYYFZ',
-    '9SIQT8TOJO',
-    'L9ECAV7KIM',
-    'LS4PSXUNUM',
-    'OLJCESPC7Z']
+    products = [
+    'ONBQ:0PUK6V6EV0',
+    'ONBQ:1YMWWN1N4O',
+    'ONBQ:2ZYFJ3GM2N',
+    'ONBQ:66VCHSJNUP',
+    'ONBQ:6E92ZMYYFZ',
+    'ONBQ:9SIQT8TOJO',
+    'ONBQ:L9ECAV7KIM',
+    'ONBQ:LS4PSXUNUM',
+    'ONBQ:OLJCESPC7Z']
 
 def index(l):
     l.client.get("/")
