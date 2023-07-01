@@ -18,7 +18,6 @@ import random
 from locust import HttpUser, TaskSet, between
 
 products = [
-    products = [
     'ONBQ:0PUK6V6EV0',
     'ONBQ:1YMWWN1N4O',
     'ONBQ:2ZYFJ3GM2N',
