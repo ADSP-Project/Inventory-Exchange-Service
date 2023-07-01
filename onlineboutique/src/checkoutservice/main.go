@@ -353,7 +353,7 @@ type Response struct {
 
 func getExternalProduct(id string) (bool, error) {
 	//my-service.default.svc.cluster.local
-	enpoint := fmt.Sprintf("http://%s:9090/product/%s", os.Getenv("APISERVICE_SERVICE_HOST"), id)
+	enpoint := fmt.Sprintf("http://%s:%s/product/%s", os.Getenv("APISERVICE_SERVICE_HOST"), os.Getenv("APISERVICE_SERVICE_PORT"), id)
 	fmt.Println(enpoint)
 	response, err := http.Get(enpoint)
 	if err != nil {
@@ -455,8 +455,7 @@ func postExternalOrder(order pb.OrderResult) {
 	}
 
 	// Create a request with the JSON data
-	request, err := http.NewRequest("POST", fmt.Sprintf("http://%s:9090/order", os.Getenv("APISERVICE_SERVICE_HOST")), bytes.NewBuffer(jsonData))
-	fmt.Println(os.Getenv("APISERVICE_SERVICE_HOST"))
+	request, err := http.NewRequest("POST", fmt.Sprintf("http://%s:%s/order", os.Getenv("API_SERVICE_SERVICE_HOST"), os.Getenv("API_SERVICE_SERVICE_PORT")), bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return
