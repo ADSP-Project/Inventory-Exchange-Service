@@ -32,7 +32,7 @@ export default function handler(
       // Transform the response structure
       const modifiedResults = results.map((product: any) => {
         return {
-          id: "SKSH" + product.id,
+          id: "SKSH:" + product.sock_id,
           name: product.name,
           description: product.description,
           picture: product.image_url_1,
