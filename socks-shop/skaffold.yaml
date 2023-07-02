@@ -12,6 +12,15 @@ build:
   #  context: carts/docker/carts
   - image: nextjs-docker
     context: federationservice
+  - image: orders-db
+  - image: orders
+  - image: payment
+  - image: queue-master
+  - image: rabbitmq
+  - image: session-db
+  - image: shipping
+  - image: user-db
+  - image: user
   tagPolicy:
     gitCommit: {}
   local:
