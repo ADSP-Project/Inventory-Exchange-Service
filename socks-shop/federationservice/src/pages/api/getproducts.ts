@@ -27,7 +27,15 @@ export default function handler(
         return;
       }
       console.log('Connection established');
-      res.status(200).json(results)
+
+      // Create the modified response object
+      const modifiedResults = {
+        shop: 'Sock-Shop',
+        id: 'SKSH',
+        products: results,
+      };
+
+      res.status(200).json(modifiedResults)
     });
 
   }
