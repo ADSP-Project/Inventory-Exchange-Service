@@ -351,7 +351,6 @@ type Response struct {
 }
 
 func getExternalProduct(id string) (bool, error) {
-	//my-service.default.svc.cluster.local
 	s := strings.Split(id, ":")
 	_, realId := s[0], s[1]
 	enpoint := fmt.Sprintf("http://localhost:%s/api/getproduct?id=%s", "3000", realId)
