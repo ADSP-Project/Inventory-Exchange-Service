@@ -18,11 +18,11 @@ import (
 
 // Product defines a structure for an item in product catalog
 type Product struct {
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Picture     string `json:"picture"`
-	Price       int    `json:"price"`
+	ID          string  `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Picture     string  `json:"picture"`
+	Price       float32 `json:"price"`
 	//PriceUsd    priceUsd   `json:"priceUsd"`
 	//Categories  categories `json:"categories"`
 }

@@ -36,8 +36,7 @@ export default function handler(
           name: product.name,
           description: product.description,
           picture: product.image_url_1,
-          price: product.price,
-          count: product.count,
+          price: product.price
         };
       });
 
