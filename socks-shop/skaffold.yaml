@@ -10,34 +10,8 @@ build:
   # https://skaffold.dev/docs/concepts/#image-repository-handling
   #- image: carts
   #  context: carts/docker/carts
-  - image: carts-db
-    context: carts-db
-  - image: carts
-    context: carts
-  - image: catalogue-db
-    context: catalogue-db
-  - image: catalogue
-    context: catalogue
   - image: nextjs-docker
-    context: nextjs-docker
-  - image: orders-db
-    context: orders-db
-  - image: orders
-    context: orders
-  - image: payment
-    context: payment
-  - image: queue-master
-    context: queue-master
-  - image: rabbitmq
-    context: rabbitmq
-  - image: session-db
-    context: session-db
-  - image: shipping
-    context: shipping
-  - image: user-db
-    context: user-db
-  - image: user
-    context: user
+    context: federationservice
   tagPolicy:
     gitCommit: {}
   local:
