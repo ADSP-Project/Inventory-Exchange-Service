@@ -27,19 +27,8 @@ export default function handler(
         return;
       }
       console.log('Connection established');
-      console.log('This works');
-      console.log(results);
 
-      // Create the modified response object
-      const modifiedResults = {
-        shop: 'Sock-Shop',
-        id: 'SKSH',
-        products: results,
-      };
-
-      console.log(modifiedResults);
-
-      res.status(200).json(modifiedResults)
+      res.status(200).json(results)
     });
 
   }
