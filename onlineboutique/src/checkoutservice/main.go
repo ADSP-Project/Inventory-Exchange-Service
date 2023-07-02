@@ -353,32 +353,17 @@ type Response struct {
 
 func getExternalProduct(id string) (bool, error) {
 	//my-service.default.svc.cluster.local
-	enpoint := fmt.Sprintf("http://%s:%s/product/%s", os.Getenv("APISERVICE_SERVICE_HOST"), os.Getenv("APISERVICE_SERVICE_PORT"), id)
+	s := strings.Split(id, ":")
+	_, realId := s[0], s[1]
+	enpoint := fmt.Sprintf("http://localhost:%s/api/getproduct?id=%s", "3000", realId)
 	fmt.Println(enpoint)
 	response, err := http.Get(enpoint)
 	if err != nil {
 		fmt.Println(err)
 		return false, fmt.Errorf("error sending request: %+v", err)
 	}
-
-	// Make sure the response body is closed after we are done reading it
-	defer response.Body.Close()
-
-	// Read the response body
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		fmt.Println(err)
-		return false, fmt.Errorf("error reading response: %+v", err)
-	}
-
-	var responseJson Response
-
-	err = json.Unmarshal(body, &responseJson)
-	if err != nil {
-		fmt.Println(err)
-		return false, fmt.Errorf("error when unmarshal response: %+v", err)
-	}
-	if responseJson.Status == "Success" {
+	fmt.Println(response)
+	if response.Status == "200" {
 		return true, nil
 	}
 	return false, nil
