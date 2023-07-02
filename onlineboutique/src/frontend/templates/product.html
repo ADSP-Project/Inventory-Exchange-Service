@@ -50,7 +50,7 @@
             </div>
             <button type="submit" class="cymbal-button-primary">Add To Cart</button>
             <div class='external-product-wrapper'>
-              {{ $idParts := splitFunc ":" $.product.Item.Id }}
+              {{ $idParts := split ":" $.product.Item.Id }}
               <p>{{$idParts}}</p>
               <p>{{$.product.Item.Id}}</p>
               {{ if ne (index $idParts 0) "ONBQ" }}
