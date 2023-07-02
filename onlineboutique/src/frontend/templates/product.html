@@ -49,14 +49,11 @@
               <img src="/static/icons/Hipster_DownArrow.svg" alt="">
             </div>
             <button type="submit" class="cymbal-button-primary">Add To Cart</button>
-          <div class='external-product-wrapper'>
-            <script>
-              shop = $.product.Item.Id.split(":")[0];
-              if (shop!="ONBQ") {
-                document.write("<p>Dispatched from and sold by</p>");
-              }
-            </script>
-          </div>
+            <div class='external-product-wrapper'>
+              {{ if ne (index (split $.product.Item.Id ":") 0) "ONBQ" }}
+                <p>Dispatched from and sold by</p>
+              {{ end }}
+            </div>
           </form>
         </div>
       </div>
