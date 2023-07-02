@@ -353,7 +353,7 @@ type Response struct {
 func getExternalProduct(id string) (bool, error) {
 	s := strings.Split(id, ":")
 	_, realId := s[0], s[1]
-	enpoint := fmt.Sprintf("http://localhost:%s/api/getproduct?id=%s", "3000", realId)
+	enpoint := fmt.Sprintf("http://35.195.208.245:%s/api/getproduct?id=%s", "3000", realId)
 	fmt.Println(enpoint)
 	response, err := http.Get(enpoint)
 	if err != nil {
