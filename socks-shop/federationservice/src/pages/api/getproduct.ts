@@ -37,6 +37,7 @@ export default function handler(
         }
 
         const product = results[0];
+        console.log("Current product count: " + product.count);
 
         if (product.count >= 1) {
             const updateCountQuery = 'UPDATE sock SET count = count - 1 WHERE sock_id = ?';
@@ -46,6 +47,7 @@ export default function handler(
                 console.log('Error updating count: ', err);
                 return;
             }
+            console.log(result);
             console.log('Count updated successfully');
             res.status(200).json("Success")
             });
