@@ -27,6 +27,7 @@ export default function handler(
         return;
       }
       console.log('Connection established');
+      console.log('This works');
       console.log(results);
 
       // Create the modified response object
