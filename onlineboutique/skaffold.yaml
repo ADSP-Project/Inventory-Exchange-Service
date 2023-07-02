@@ -56,6 +56,22 @@ manifests:
     - kubernetes-manifests
 deploy:
   kubectl: {}
+portForward:
+      - resourceType: deployment
+        resourceName: frontend
+        port: 8080
+        localPort: 8080
+        address: 0.0.0.0
+      - resourceType: deployment
+        resourceName: apiservice
+        port: 9090
+        localPort: 9090
+        address: 0.0.0.0
+      - resourceType: deployment
+        resourceName: productcatalogservice
+        port: 3560
+        localPort: 3560
+        address: 0.0.0.0
 # "gcb" profile allows building and pushing the images
 # on Google Container Builder without requiring docker
 # installed on the developer machine. However, note that
