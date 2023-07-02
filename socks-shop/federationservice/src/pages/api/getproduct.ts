@@ -13,8 +13,10 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Product | { error: string }>
 ) {
+    console.log("KOMMER HIT")
   if (req.method === 'GET') {
     const productId = req.query.id;
+    console.log(productId);
 
     if (!productId) {
       res.status(400).json({ error: 'Product ID is required' });
