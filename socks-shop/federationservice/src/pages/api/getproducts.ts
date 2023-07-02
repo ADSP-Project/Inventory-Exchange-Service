@@ -27,6 +27,7 @@ export default function handler(
         return;
       }
       console.log('Connection established');
+      console.log('Coming here')
 
       // Create the modified response object
       const modifiedResults = {
@@ -34,6 +35,8 @@ export default function handler(
         id: 'SKSH',
         products: results,
       };
+
+      console.log(modifiedResults);
 
       res.status(200).json(modifiedResults)
     });
