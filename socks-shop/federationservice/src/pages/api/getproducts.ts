@@ -35,15 +35,15 @@ export default function handler(
           id: product.id,
           name: product.name,
           description: product.description,
-          picture: product.picture,
-          priceUsd: product.priceUsd,
-          categories: product.categories,
+          picture: product.image_url_1,
+          price: product.price,
+          count: product.count,
         };
       });
 
       // Create the modified response object
       const finalResponse = {
-        name: 'Sock-Shop',
+        name: 'Sock Shop',
         id: 'SKSH',
         products: modifiedResults,
       };
