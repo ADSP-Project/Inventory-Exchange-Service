@@ -32,7 +32,7 @@ export default function handler(
       // Transform the response structure
       const modifiedResults = results.map((product: any) => {
         return {
-          id: product.id,
+          id: "SKSH" + product.id,
           name: product.name,
           description: product.description,
           picture: product.image_url_1,
@@ -41,16 +41,7 @@ export default function handler(
         };
       });
 
-      // Create the modified response object
-      const finalResponse = {
-        name: 'Sock Shop',
-        id: 'SKSH',
-        products: modifiedResults,
-      };
-
-      console.log(modifiedResults);
-
-      res.status(200).json(finalResponse)
+      res.status(200).json(modifiedResults)
     });
   }
 }
