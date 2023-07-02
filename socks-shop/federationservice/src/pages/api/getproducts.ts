@@ -29,17 +29,28 @@ export default function handler(
       console.log('Connection established');
       console.log('Coming here')
 
+      // Transform the response structure
+      const modifiedResults = results.map((product: any) => {
+        return {
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          picture: product.picture,
+          priceUsd: product.priceUsd,
+          categories: product.categories,
+        };
+      });
+
       // Create the modified response object
-      const modifiedResults = {
+      const finalResponse = {
         name: 'Sock-Shop',
         id: 'SKSH',
-        products: results,
+        products: modifiedResults,
       };
 
       console.log(modifiedResults);
 
-      res.status(200).json(modifiedResults)
+      res.status(200).json(finalResponse)
     });
-
   }
 }
