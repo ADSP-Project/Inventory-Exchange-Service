@@ -11,7 +11,7 @@ type Product = {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Product | { error: string }>
+  res: NextApiResponse<string | { error: string }>
 ) {
   if (req.method === 'GET') {
     const productId = req.query.id;
@@ -47,10 +47,10 @@ export default function handler(
                 return;
             }
             console.log('Count updated successfully');
-            res.status(200).json({result: "Success"})
+            res.status(200).json("Success")
             });
         } else {
-            res.status(400).json({result: "Product not available"})
+            res.status(400).json("Product not available")
         }
       }
     );
