@@ -13,10 +13,8 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Product | { error: string }>
 ) {
-    console.log("KOMMER HIT")
   if (req.method === 'GET') {
     const productId = req.query.id;
-    console.log(productId);
 
     if (!productId) {
       res.status(400).json({ error: 'Product ID is required' });
@@ -40,16 +38,20 @@ export default function handler(
 
         const product = results[0];
 
-        // Transform the response structure
-        const modifiedProduct: Product = {
-          id: 'SKSH:' + product.sock_id,
-          name: product.name,
-          description: product.description,
-          picture: product.image_url_1,
-          price: product.price,
-        };
+        if (product.count >= 1) {
+            const updateCountQuery = 'UPDATE sock SET count = count - 1 WHERE sock_id = ?';
 
-        res.status(200).json(modifiedProduct);
+            connection.query(updateCountQuery, [productId], (err, result) => {
+            if (err) {
+                console.log('Error updating count: ', err);
+                return;
+            }
+            console.log('Count updated successfully');
+            res.status(200).json({result: "Success"})
+            });
+        } else {
+            res.status(400).json({result: "Product not available"})
+        }
       }
     );
   }
