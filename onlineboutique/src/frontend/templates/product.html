@@ -49,9 +49,9 @@
               <img src="/static/icons/Hipster_DownArrow.svg" alt="">
             </div>
             <button type="submit" class="cymbal-button-primary">Add To Cart</button>
-            <div class='external-product-wrapper'>
+            <div class='external-product-wrapper' style="margin-top: 10px;">
               {{ if ne (index (split $.product.Item.Id ":") 0) "ONBQ" }}
-                <p>Dispatched from and sold by</p>
+                <p>Dispatched from and sold by Sock Shop</p>
               {{ end }}
             </div>
           </form>
