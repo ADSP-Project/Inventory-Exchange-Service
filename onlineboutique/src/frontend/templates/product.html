@@ -34,6 +34,9 @@
           <h2>{{ $.product.Item.Name }}</h2>
           <p class="product-price">{{ renderMoney $.product.Price }}</p>
           <p>{{ $.product.Item.Description }}</p>
+          <p>{{ if ne (index (split $.product.Item.Id ":") 0) "ONBQ" }}
+            <p>Dispatched from and sold by <b>Sock Shop</b></p>
+          {{ end }}</p>
 
           <form method="POST" action="/cart">
             <input type="hidden" name="product_id" value="{{$.product.Item.Id}}" />
@@ -49,11 +52,6 @@
               <img src="/static/icons/Hipster_DownArrow.svg" alt="">
             </div>
             <button type="submit" class="cymbal-button-primary">Add To Cart</button>
-            <div class='external-product-wrapper' style="margin-top: 10px;">
-              {{ if ne (index (split $.product.Item.Id ":") 0) "ONBQ" }}
-                <p>Dispatched from and sold by <b>Sock Shop</b></p>
-              {{ end }}
-            </div>
           </form>
         </div>
       </div>
