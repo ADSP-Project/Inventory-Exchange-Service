@@ -8,22 +8,29 @@ import (
 	"os"
 )
 
-type priceUsd struct {
-	CurrencyCode string `json:"currencyCode"`
-	Units        int    `json:"units"`
-	Nanos        int    `json:"nanos"`
-}
+// type priceUsd struct {
+// 	CurrencyCode string `json:"currencyCode"`
+// 	Units        int    `json:"units"`
+// 	Nanos        int    `json:"nanos"`
+// }
 
-type categories []string
+//type categories []string
 
 // Product defines a structure for an item in product catalog
 type Product struct {
-	ID          string     `json:"id"`
-	Name        string     `json:"name"`
-	Description string     `json:"description"`
-	Picture     string     `json:"picture"`
-	PriceUsd    priceUsd   `json:"priceUsd"`
-	Categories  categories `json:"categories"`
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Picture     string `json:"picture"`
+	Price       int    `json:"price"`
+	//PriceUsd    priceUsd   `json:"priceUsd"`
+	//Categories  categories `json:"categories"`
+}
+
+type ProductsResponse struct {
+	ID       string    `json:"id"`
+	Name     string    `json:"name"`
+	Products []Product `json:"products"`
 }
 
 type ProductsCatalog struct {
@@ -39,14 +46,14 @@ func CreateProductHandler() http.HandlerFunc {
 			return
 		}
 		// Check if data is proper JSON (data validation)
-		var products []Product
-		err = json.Unmarshal(data, &products)
+		var productsResponse ProductsResponse
+		err = json.Unmarshal(data, &productsResponse)
 		if err != nil {
 			rw.WriteHeader(http.StatusExpectationFailed)
 			rw.Write([]byte("Invalid Data Format"))
 			return
 		}
-		fmt.Println(products)
+		fmt.Println(productsResponse)
 		// Load existing products and append the data to product list
 		var catalog ProductsCatalog
 		data, err = ioutil.ReadFile("products.json")
@@ -62,7 +69,7 @@ func CreateProductHandler() http.HandlerFunc {
 			return
 		}
 		fmt.Println(catalog)
-		catalog.Products = append(catalog.Products, products...)
+		catalog.Products = append(catalog.Products, productsResponse.Products...)
 		updatedData, err := json.Marshal(catalog)
 		if err != nil {
 			fmt.Println("An error happended with appending")
