@@ -30,11 +30,11 @@ export default function handler(
 
       // Create the modified response object
       const modifiedResults = {
-        shop: 'Sock-Shop',
+        name: 'Sock-Shop',
         id: 'SKSH',
         products: results,
       };
-      
+
       res.status(200).json(modifiedResults)
     });
 
