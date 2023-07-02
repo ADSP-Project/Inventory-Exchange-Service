@@ -360,8 +360,8 @@ func getExternalProduct(id string) (bool, error) {
 		fmt.Println(err)
 		return false, fmt.Errorf("error sending request: %+v", err)
 	}
-	fmt.Println(response)
-	if response.Status == "200" {
+	fmt.Println(response.Status)
+	if response.StatusCode == 200 {
 		return true, nil
 	}
 	return false, nil
