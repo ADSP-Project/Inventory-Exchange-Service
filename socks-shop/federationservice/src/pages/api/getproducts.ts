@@ -35,7 +35,7 @@ export default function handler(
           id: "SKSH:" + product.sock_id,
           name: product.name,
           description: product.description,
-          picture: product.image_url_1,
+          picture: "/static" + product.image_url_1,
           price: product.price,
         };
       });
