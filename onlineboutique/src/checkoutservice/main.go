@@ -366,7 +366,7 @@ func getExternalProduct(id string) (bool, error) {
 	if response.StatusCode == 200 {
 		return true, nil
 	}
-	return false, nil
+	return false, fmt.Errorf("not enough products: %s", id)
 }
 
 type ExternalMoney struct {
@@ -477,6 +477,7 @@ func (cs *checkoutService) prepOrderItems(ctx context.Context, items []*pb.CartI
 			isExternal = true
 			fmt.Println(b)
 			fmt.Println(err)
+			// b is true if
 			if err != nil && !b {
 				return nil, isExternal, fmt.Errorf("failed to get external product #%q", item.GetProductId())
 			}
