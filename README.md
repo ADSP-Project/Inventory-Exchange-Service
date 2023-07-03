@@ -1,6 +1,7 @@
 # Federdated-Marketplaces
 
-### Setup the Shops on your local machine OR Google Cloud VM
+## Setup that deploys remote images (i.e. no local changes will be reflected):
+### Setup the Shops on your local machine OR Google Cloud VM using
 
 
     sudo apt update
@@ -41,3 +42,95 @@ Get Products of shops
 sock-shop: curl localhost:8083/api/getproducts
 
 onlineboutique: localhost:8082/products
+
+## Setup that deploys local images using skaffold (i.e. local changes will be reflected):
+
+### Install dependencies:
+
+For linux Debian x86-64:
+
+Install docker (https://docs.docker.com/desktop/install/linux-install/) (https://docs.docker.com/engine/install/linux-postinstall/)
+
+    # Install docker
+    sudo apt-get update
+    sudo apt-get install ./docker-desktop-<version>-<arch>.deb  
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    # If you’re running Linux in a virtual machine, it may be necessary to restart the virtual machine for changes to take effect.
+    newgrp docker
+    docker run hello-world
+
+Install minikube (https://minikube.sigs.k8s.io/docs/start/)
+
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+Install kubectl (https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+
+    # Install docker
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+    # Validate the binary (optional)
+    curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    # Validate the kubectl binary against the checksum file
+    echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+    # If valid, the output is:
+    # kubectl: OK
+
+Install git and repo:
+
+    sudo apt install git-all
+    
+    git clone https://github.com/ADSP-Project/Federdated-Marketplaces.git
+    cd Federdated-Marketplaces
+
+Start minikube clusters:
+
+    minikube start --cpus=4 --memory 4096 --disk-size 32g --profile online-boutique
+    
+    minikube start --memory 8192 --cpus 4 --profile sock-shop
+
+    # Verify by listing profiles:
+    minikube profile list
+
+    # IMPORTANT!! When you want to change profile you have to write the command 
+    kubectl config use-context <profile>
+
+IMPORTANT: Before you run the code you have to make a change on the IP address in the checkoutservice Dockerfile, change the ENV PUBLIC_IP to the public IP address of your virtual machine, otherwise the checkoutservice won't be able to send sock-shop requests.
+
+To run the code:
+
+    # cd into socks-shop
+    kubectl config use-context sock-shop
+    skaffold run
+
+    #cd into onlineboutique
+    kubectl config use-context online-boutique
+    skaffold run
+
+To stop code:
+
+    skaffold delete
+
+Expose ports:
+
+    #Sock-Shop
+    #Set config
+    kubectl config use-context sock-shop
+    kubectl port-forward deployment/front-end 8081:8079 --address 0.0.0.0 &
+    kubectl port-forward deployment/nextjs-docker 3000:3000 --address 0.0.0.0 &
+
+    #Online boutique
+    #Set config
+    kubectl config use-context online-boutique
+    kubectl port-forward deployment/frontend --address 0.0.0.0 8080:8080 &
+    kubectl port-forward deployment/apiservice --address 0.0.0.0 9090:9090 &
+    kubectl port-forward deployment/productcatalogservice --address 0.0.0.0 3560:3560 &
+
+To get logs from pod:
+
+    kubectl config use-context <sock-shop/onlineboutique>
+    kubectl logs deployment/<nameofservice>
+
+
+
