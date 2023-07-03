@@ -32,6 +32,9 @@ build:
     context: src/shippingservice
   - image: checkoutservice
     context: src/checkoutservice
+    docker:
+        buildArgs:
+        - PUBLIC_IP="34.77.229.231"
   - image: paymentservice
     context: src/paymentservice
   - image: currencyservice
