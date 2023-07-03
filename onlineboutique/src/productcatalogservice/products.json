@@ -107,18 +107,6 @@
                 "nanos": 990000000
             },
             "categories": ["kitchen"]
-        },
-        {
-            "id": "SKSH:BED1000",
-            "name": "Bed",
-            "description": "A confy bed",
-            "picture": "/static/img/products/bed.jpeg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 10,
-                "nanos": 990000000
-            },
-            "categories": ["home"]
         }
     ]
 }
