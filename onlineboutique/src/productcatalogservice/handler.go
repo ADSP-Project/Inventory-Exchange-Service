@@ -4,9 +4,25 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"os"
 )
+
+// Product defines a structure for an item in product catalog
+type InputProduct struct {
+	ID          string  `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Picture     string  `json:"picture"`
+	Price       float64 `json:"price"`
+	//PriceUsd    priceUsd   `json:"priceUsd"`
+	//Categories  categories `json:"categories"`
+}
+
+type ProductsCatalog struct {
+	Products []Product `json:"products"`
+}
 
 type priceUsd struct {
 	CurrencyCode string `json:"currencyCode"`
@@ -16,7 +32,6 @@ type priceUsd struct {
 
 type categories []string
 
-// Product defines a structure for an item in product catalog
 type Product struct {
 	ID          string     `json:"id"`
 	Name        string     `json:"name"`
@@ -26,8 +41,10 @@ type Product struct {
 	Categories  categories `json:"categories"`
 }
 
-type ProductsCatalog struct {
-	Products []Product `json:"products"`
+func splitFloatNumber(number float64) (intPart int, floatPart int) {
+	intPart = int(number)
+	floatPart = int(math.Abs(number-float64(intPart)) * math.Pow10(6)) // Adjust the precision as needed
+	return intPart, floatPart
 }
 
 // CreateProductHandler is used to create a new product and add to our product store.
@@ -39,7 +56,7 @@ func CreateProductHandler() http.HandlerFunc {
 			return
 		}
 		// Check if data is proper JSON (data validation)
-		var products []Product
+		var products []InputProduct
 		err = json.Unmarshal(data, &products)
 		if err != nil {
 			rw.WriteHeader(http.StatusExpectationFailed)
@@ -47,6 +64,25 @@ func CreateProductHandler() http.HandlerFunc {
 			return
 		}
 		fmt.Println(products)
+		correctProducts := make([]Product, len(products))
+		for i, p := range products {
+			intPart, floatPart := splitFloatNumber(p.Price)
+
+			correctProduct := Product{
+				ID:          p.ID,
+				Name:        p.Name,
+				Description: p.Description,
+				Picture:     p.Picture,
+				PriceUsd: priceUsd{
+					CurrencyCode: "USD",
+					Units:        intPart,
+					Nanos:        floatPart,
+				},
+				Categories: categories{"clothing", "socks"},
+			}
+			correctProducts[i] = correctProduct
+		}
+
 		// Load existing products and append the data to product list
 		var catalog ProductsCatalog
 		data, err = ioutil.ReadFile("products.json")
@@ -62,7 +98,7 @@ func CreateProductHandler() http.HandlerFunc {
 			return
 		}
 		fmt.Println(catalog)
-		catalog.Products = append(catalog.Products, products...)
+		catalog.Products = append(catalog.Products, correctProducts...)
 		updatedData, err := json.Marshal(catalog)
 		if err != nil {
 			fmt.Println("An error happended with appending")

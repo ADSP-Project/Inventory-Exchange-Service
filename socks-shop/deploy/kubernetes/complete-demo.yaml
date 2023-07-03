@@ -243,7 +243,6 @@ spec:
   selector:
     name: nextjs-docker
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:

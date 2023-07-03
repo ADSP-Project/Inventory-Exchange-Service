@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-docker
+  labels:
+    name: nextjs-docker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nextjs-docker
+  template:
+    metadata:
+      labels:
+        name: nextjs-docker
+    spec:
+      containers:
+      - name: nextjs-docker
+        image: nextjs-docker
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-docker
+  annotations:
+        prometheus.io/scrape: 'true'
+  labels:
+    name: nextjs-docker
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 3000
+    nodePort: 30000
+  selector:
+    name: nextjs-docker

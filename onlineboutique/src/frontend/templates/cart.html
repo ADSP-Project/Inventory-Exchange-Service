@@ -66,9 +66,17 @@
                                     <h4>{{ .Item.Name }}</h4>
                                 </div>
                             </div>
-                            <div class="row cart-summary-item-row-item-id-row">
+                            <!--<div class="row cart-summary-item-row-item-id-row">
                                 <div class="col">
                                     SKU #{{ .Item.Id }}
+                                </div>
+                            </div>-->
+                            <div class='row cart-summary-item-row-item-id-row'>
+                                <div class="col">
+                                    {{ $idParts := split ":" .Item.Id }}
+                                    {{ if ne (index $idParts 0) "ONBQ" }}
+                                        <p>Dispatched from and sold by <b>Sock Shop</b></p>
+                                    {{ end }}
                                 </div>
                             </div>
                             <div class="row">

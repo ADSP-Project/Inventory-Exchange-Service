@@ -27,8 +27,20 @@ export default function handler(
         return;
       }
       console.log('Connection established');
-      res.status(200).json(results)
-    });
+      console.log('Coming here')
 
+      // Transform the response structure
+      const modifiedResults = results.map((product: any) => {
+        return {
+          id: "SKSH:" + product.sock_id,
+          name: product.name,
+          description: product.description,
+          picture: "/static" + product.image_url_1,
+          price: product.price,
+        };
+      });
+
+      res.status(200).json(modifiedResults)
+    });
   }
 }

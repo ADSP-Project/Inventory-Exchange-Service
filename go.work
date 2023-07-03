@@ -1,0 +1,9 @@
+go 1.20
+
+use (
+	./onlineboutique/src/apiservice
+	./onlineboutique/src/frontend
+	./onlineboutique/src/productcatalogservice
+	./onlineboutique/src/shippingservice
+	./onlineboutique/src/checkoutservice
+)

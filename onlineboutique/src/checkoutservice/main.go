@@ -19,7 +19,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"os"
@@ -352,36 +351,22 @@ type Response struct {
 }
 
 func getExternalProduct(id string) (bool, error) {
-	//my-service.default.svc.cluster.local
-	enpoint := fmt.Sprintf("http://%s:9090/product/%s", os.Getenv("PUBLIC_IP"), id)
+	s := strings.Split(id, ":")
+	_, realId := s[0], s[1]
+	publicIP := os.Getenv("PUBLIC_IP")
+	fmt.Println(publicIP)
+	enpoint := fmt.Sprintf("http://%s:%s/api/getproduct?id=%s", publicIP, "3000", realId)
 	fmt.Println(enpoint)
 	response, err := http.Get(enpoint)
 	if err != nil {
 		fmt.Println(err)
 		return false, fmt.Errorf("error sending request: %+v", err)
 	}
-
-	// Make sure the response body is closed after we are done reading it
-	defer response.Body.Close()
-
-	// Read the response body
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		fmt.Println(err)
-		return false, fmt.Errorf("error reading response: %+v", err)
-	}
-
-	var responseJson Response
-
-	err = json.Unmarshal(body, &responseJson)
-	if err != nil {
-		fmt.Println(err)
-		return false, fmt.Errorf("error when unmarshal response: %+v", err)
-	}
-	if responseJson.Status == "Success" {
+	fmt.Println(response.Status)
+	if response.StatusCode == 200 {
 		return true, nil
 	}
-	return false, nil
+	return false, fmt.Errorf("not enough products: %s", id)
 }
 
 type ExternalMoney struct {
@@ -455,7 +440,7 @@ func postExternalOrder(order pb.OrderResult) {
 	}
 
 	// Create a request with the JSON data
-	request, err := http.NewRequest("POST", fmt.Sprintf("http://%s:9090/order", os.Getenv("PUBLIC_IP")), bytes.NewBuffer(jsonData))
+	request, err := http.NewRequest("POST", fmt.Sprintf("http://%s:%s/order", os.Getenv("APISERVICE_SERVICE_HOST"), os.Getenv("APISERVICE_SERVICE_PORT")), bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return
@@ -492,6 +477,7 @@ func (cs *checkoutService) prepOrderItems(ctx context.Context, items []*pb.CartI
 			isExternal = true
 			fmt.Println(b)
 			fmt.Println(err)
+			// b is true if
 			if err != nil && !b {
 				return nil, isExternal, fmt.Errorf("failed to get external product #%q", item.GetProductId())
 			}

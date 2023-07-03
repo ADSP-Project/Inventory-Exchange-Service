@@ -43,6 +43,7 @@ var (
 	isCymbalBrand = "true" == strings.ToLower(os.Getenv("CYMBAL_BRANDING"))
 	templates     = template.Must(template.New("").
 			Funcs(template.FuncMap{
+			"split":              splitFunc,
 			"renderMoney":        renderMoney,
 			"renderCurrencyLogo": renderCurrencyLogo,
 		}).ParseGlob("templates/*.html"))
@@ -490,6 +491,10 @@ func cartSize(c []*pb.CartItem) int {
 func renderMoney(money pb.Money) string {
 	currencyLogo := renderCurrencyLogo(money.GetCurrencyCode())
 	return fmt.Sprintf("%s%d.%02d", currencyLogo, money.GetUnits(), money.GetNanos()/10000000)
+}
+
+func splitFunc(sep, s string) []string {
+	return strings.Split(s, sep)
 }
 
 func renderCurrencyLogo(currencyCode string) string {

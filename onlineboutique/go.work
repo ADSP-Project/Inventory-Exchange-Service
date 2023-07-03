@@ -1,9 +1,0 @@
-go 1.20
-
-use (
-	./src/apiservice
-	./src/frontend
-	./src/productcatalogservice
-	./src/shippingservice
-	./src/checkoutservice
-)
