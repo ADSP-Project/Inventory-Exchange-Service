@@ -442,7 +442,7 @@ func postExternalOrder(order pb.OrderResult) {
 	// Create a request with the JSON data
 	publicIP := os.Getenv("PUBLIC_IP")
 	fmt.Println(publicIP)
-	request, err := http.NewRequest("POST", fmt.Sprintf("http://%s:%s/order", publicIP, "3000"), bytes.NewBuffer(jsonData))
+	request, err := http.NewRequest("POST", fmt.Sprintf("http://%s:%s/api/order", publicIP, "3000"), bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return

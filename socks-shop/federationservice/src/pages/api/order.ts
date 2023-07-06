@@ -36,6 +36,7 @@ export default function handler(
         try {
         const postData: ExternalOrderData = req.body;
         res.status(200).json({ message: 'Order processed successfully' });
+        console.log(postData);
         } catch (error) {
         // Return an error response
         res.status(500).json({ error: 'Internal server error' });
