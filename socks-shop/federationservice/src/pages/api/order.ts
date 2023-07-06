@@ -32,7 +32,7 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse
   ) {
-    if (req.method === 'GET') {
+    if (req.method === 'POST') {
         try {
         const postData: ExternalOrderData = req.body;
         res.status(200).json({ message: 'Order processed successfully' });
