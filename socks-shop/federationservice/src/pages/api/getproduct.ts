@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import connection from '../../utils/db';
 
+const { httpRequestCount } = require('./prometheus');
+
 type Product = {
   id: string;
   name: string;
@@ -56,5 +58,9 @@ export default function handler(
         }
       }
     );
+
+    // Instrument the request handling code
+    // Increment the counter for each request
+    httpRequestCount.labels(req.method, req.url, res.statusCode).inc();
   }
 }
