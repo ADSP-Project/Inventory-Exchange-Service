@@ -56,11 +56,10 @@ export default function handler(
         } else {
             res.status(400).json("Product not available")
         }
+        httpRequestCount.inc(req.method, req.url, res.statusCode);
       }
     );
 
-    // Instrument the request handling code
-    // Increment the counter for each request
-    httpRequestCount.labels(req.method, req.url, res.statusCode).inc();
+    
   }
 }

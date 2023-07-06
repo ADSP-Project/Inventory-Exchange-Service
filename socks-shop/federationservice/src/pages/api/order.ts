@@ -42,10 +42,7 @@ export default function handler(
         } catch (error) {
         // Return an error response
         res.status(500).json({ error: 'Internal server error' });
-        };
+        }
         httpRequestCount.labels(req.method, req.url, res.statusCode).inc();
-
     }
-
-  
-    }
+};

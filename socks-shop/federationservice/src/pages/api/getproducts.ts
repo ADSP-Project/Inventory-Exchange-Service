@@ -43,7 +43,7 @@ export default function handler(
       });
 
       res.status(200).json(modifiedResults)
+      httpRequestCount.inc(req.method, req.url, res.statusCode);
     });
-    httpRequestCount.labels(req.method, req.url, res.statusCode).inc();
   }
 }
