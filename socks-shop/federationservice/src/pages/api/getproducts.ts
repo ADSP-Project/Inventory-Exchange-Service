@@ -2,8 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import connection from '../../utils/db'
 
-const { httpRequestCount } = require('../../utils/prometheus');
-
 type Data = {
   name: string
 }
@@ -43,7 +41,6 @@ export default function handler(
       });
 
       res.status(200).json(modifiedResults)
-      httpRequestCount.labels(req.method, req.url, res.statusCode).inc();
     });
   }
 }

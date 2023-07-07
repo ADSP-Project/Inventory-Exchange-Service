@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const { httpRequestCount } = require('../../utils/prometheus');
-
 export interface ExternalMoney {
     CurrencyCode: string;
     Units: number;
@@ -43,6 +41,5 @@ export default function handler(
         // Return an error response
         res.status(500).json({ error: 'Internal server error' });
         }
-        httpRequestCount.labels(req.method, req.url, res.statusCode).inc();
     }
 };

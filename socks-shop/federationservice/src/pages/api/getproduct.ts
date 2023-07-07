@@ -56,7 +56,6 @@ export default function handler(
         } else {
             res.status(400).json("Product not available")
         }
-        //httpRequestCount.inc(req.method, req.url, res.statusCode);
       }
     );
 
