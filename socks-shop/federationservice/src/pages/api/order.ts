@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const { httpRequestCount } = require('./prometheus');
+const { httpRequestCount } = require('../../utils/prometheus');
 
 export interface ExternalMoney {
     CurrencyCode: string;

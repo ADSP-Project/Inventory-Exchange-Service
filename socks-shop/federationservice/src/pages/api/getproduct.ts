@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import connection from '../../utils/db';
-
-const { httpRequestCount } = require('./prometheus');
+import {foovar} from './prom';
 
 type Product = {
   id: string;
@@ -15,6 +14,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<string | { error: string }>
 ) {
+  foovar(req,res.statusCode)
   if (req.method === 'GET') {
     const productId = req.query.id;
 
@@ -56,7 +56,7 @@ export default function handler(
         } else {
             res.status(400).json("Product not available")
         }
-        httpRequestCount.inc(req.method, req.url, res.statusCode);
+        //httpRequestCount.inc(req.method, req.url, res.statusCode);
       }
     );
 
