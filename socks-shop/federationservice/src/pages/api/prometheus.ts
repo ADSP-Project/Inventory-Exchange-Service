@@ -1,17 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
-  name: string
-}
-
 // Prometheus.collectDefaultMetrics();
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
-  console.log('Prometheus called')
-  const Prometheus = require('prom-client');
-  Prometheus.register.metrics().then((metrics:string) => {
-    res.status(200).end(metrics)
-  })
-}
+  if (req.method === 'GET') {
+    const Prometheus = require('prom-client');
+    Prometheus.register.metrics().then((metrics:string) => {
+      res.status(200).end(metrics)});
+  };
+};
