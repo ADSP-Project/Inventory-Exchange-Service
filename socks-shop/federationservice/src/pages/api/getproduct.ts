@@ -6,12 +6,13 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<string | { error: string }>
 ) {
+  //foovar(req,res.statusCode);
   if (req.method === 'GET') {
     const productId = req.query.id;
 
     if (!productId) {
       res.status(400).json({ error: 'Product ID is required' });
-      return;
+      //return;
     }
 
     connection.query(
@@ -21,12 +22,14 @@ export default function handler(
         if (error) {
           console.log('Error connecting to DB:', error);
           res.status(500).json({ error: 'Internal server error' });
-          return;
+          //foovar(req,res.statusCode);
+          //return;
         }
 
         if (results.length === 0) {
           res.status(404).json({ error: 'Product not found' });
-          return;
+          //foovar(req,res.statusCode);
+          //return;
         }
 
         const product = results[0];
@@ -47,10 +50,10 @@ export default function handler(
         } else {
             res.status(400).json("Product not available")
         }
-        foovar(req,res.statusCode);
+        //foovar(req,res.statusCode);
       }
     );
 
-    
+    foovar(req,res.statusCode);
   }
 }
