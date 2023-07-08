@@ -22,6 +22,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  foovar(req,res.statusCode);
   if (req.method === 'GET') {
     connection.query('SELECT * FROM `sock`', function (error, results) {
       if (error) {
@@ -42,6 +43,5 @@ export default function handler(
       });
       res.status(200).json(modifiedResults);
     });
-  foovar(req,res.statusCode);
   }
 }
