@@ -1,6 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import connection from '../../utils/db'
+import {foovar} from './prom';
+
 
 type Data = {
   name: string
@@ -38,8 +40,7 @@ export default function handler(
           price: product.price,
         };
       });
-
-      res.status(200).json(modifiedResults)
+      res.status(200).json(modifiedResults);
     });
   }
 }

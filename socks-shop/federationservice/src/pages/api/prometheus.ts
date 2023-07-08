@@ -14,6 +14,8 @@ export default function handler(
     const Prometheus = require('prom-client');
     Prometheus.register.metrics().then((metrics:string) => {
       console.log(metrics);
+      console.log(typeof metrics);
       res.status(200).end(metrics)});
+      //resolve();
   };
 };
