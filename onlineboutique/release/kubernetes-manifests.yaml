@@ -894,3 +894,44 @@ spec:
     nodePort: 32540
   selector:
     name: apiservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 5173
+    nodePort: 32545
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: ui
+          image: freefreep/ui
+          ports:
+            - containerPort: 5173
+        - name: be
+          image: freefreep/be
+          ports:
+            - containerPort: 8091
+        - name: db
+          image: freefreep/db
+          ports:
+            - containerPort: 5432
