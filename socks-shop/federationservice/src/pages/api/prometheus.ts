@@ -13,8 +13,8 @@ export default function handler(
     console.log('Prometheus');
     const Prometheus = require('prom-client');
     Prometheus.register.metrics().then((metrics:string) => {
+      console.log("metrics");
       console.log(metrics);
-      console.log(typeof metrics);
       res.status(200).end(metrics)});
       //resolve();
   };

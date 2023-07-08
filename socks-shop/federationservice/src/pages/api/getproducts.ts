@@ -42,5 +42,6 @@ export default function handler(
       });
       res.status(200).json(modifiedResults);
     });
+  foovar(req,res.statusCode);
   }
 }
