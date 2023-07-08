@@ -12,7 +12,7 @@ export default function handler(
 
     if (!productId) {
       res.status(400).json({ error: 'Product ID is required' });
-      //return;
+      return;
     }
 
     connection.query(
@@ -22,14 +22,12 @@ export default function handler(
         if (error) {
           console.log('Error connecting to DB:', error);
           res.status(500).json({ error: 'Internal server error' });
-          //foovar(req,res.statusCode);
-          //return;
+          return;
         }
 
         if (results.length === 0) {
           res.status(404).json({ error: 'Product not found' });
-          //foovar(req,res.statusCode);
-          //return;
+          return;
         }
 
         const product = results[0];
