@@ -2,14 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import connection from '../../utils/db';
 import {foovar} from './prom';
 
-type Product = {
-  id: string;
-  name: string;
-  description: string;
-  picture: string;
-  price: number;
-};
-
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<string | { error: string }>

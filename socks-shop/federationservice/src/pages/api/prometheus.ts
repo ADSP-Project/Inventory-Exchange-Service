@@ -9,6 +9,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  console.log('Prometheus called')
   const Prometheus = require('prom-client');
   Prometheus.register.metrics().then((metrics:string) => {
     res.status(200).end(metrics)

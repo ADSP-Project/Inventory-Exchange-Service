@@ -27,7 +27,6 @@ export default function handler(
         return;
       }
       console.log('Connection established');
-      console.log('Coming here')
 
       // Transform the response structure
       const modifiedResults = results.map((product: any) => {
