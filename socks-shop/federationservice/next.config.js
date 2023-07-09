@@ -13,4 +13,5 @@ const nextConfig = {
   output: 'standalone',
 }
 
+export default httpRequestCount
 module.exports = nextConfig
