@@ -14,6 +14,8 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Copy the source code
+COPY . .
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -43,6 +45,7 @@ RUN adduser --system --uid 1001 nextjs
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/next.config.js ./next.config.js
 
 USER nextjs
 

@@ -15,7 +15,9 @@ export default function handler(
     Prometheus.register.metrics().then((metrics:string) => {
       console.log("metrics");
       console.log(metrics);
-      res.status(200).end(metrics)});
+      res.status(200).write(metrics);
+      res.end();
+    });
       //resolve();
   };
 };
