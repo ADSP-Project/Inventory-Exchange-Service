@@ -1,10 +1,3 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  httpRequestCount: httpRequestCount,
-  output: 'standalone',
-}
-
 const Prometheus = require('prom-client');
 
 console.log("next config is run!")
@@ -13,5 +6,12 @@ const httpRequestCount = new Prometheus.Counter({
   help: 'Total number of HTTP requests!',
   labelNames: ['method', 'route', 'status'],
 });
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  httpRequestCount: httpRequestCount,
+  output: 'standalone',
+}
 
 module.exports = nextConfig
