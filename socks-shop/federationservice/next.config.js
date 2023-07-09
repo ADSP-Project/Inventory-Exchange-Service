@@ -10,7 +10,6 @@ const httpRequestCount = new Prometheus.Counter({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  httpRequestCount: httpRequestCount,
   output: 'standalone',
 }
 
