@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
       - name: hub
-        image: hub
+        image: freefreep/ui:8
       - name: be
-        image: be
+        image: freefreep/be
       - name: db
-        image: db
+        image: freefreep/db
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
