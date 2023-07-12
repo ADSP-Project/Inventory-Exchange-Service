@@ -46,7 +46,7 @@ build:
     context: src/adservice
   - image: apiservice
     context: src/apiservice
-  - image: hub
+  - image: be
     context: src/federationservice
     docker: 
       dockerfile: Dockerfile-BE

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: hub
-        image: hub
+        image: ui
       - name: be
         image: be
       - name: db
