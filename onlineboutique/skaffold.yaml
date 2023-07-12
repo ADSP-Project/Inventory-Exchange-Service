@@ -54,7 +54,7 @@ build:
     context: src/federationservice
     docker:
       dockerfile: Dockerfile-DB
-  - image: ui
+  - image: hub
     context: src/federationservice
     docker:
       dockerfile: Dockerfile-UI
