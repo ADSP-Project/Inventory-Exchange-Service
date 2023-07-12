@@ -1,0 +1,7 @@
+FROM node:16
+WORKDIR /app
+
+COPY ./ui/dashboard .
+RUN npm install
+EXPOSE 5173
+CMD [ "npm","run","dev" ] 

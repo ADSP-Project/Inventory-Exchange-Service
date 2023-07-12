@@ -1,0 +1,7 @@
+FROM golang:1.18
+WORKDIR /app
+COPY . .
+RUN go mod init github.com/ADSP-Project/Federation-Service
+RUN go mod tidy
+RUN go mod download
+ENTRYPOINT ["go", "run", "shop.go", "8091", "shop", "dasdasd"]
