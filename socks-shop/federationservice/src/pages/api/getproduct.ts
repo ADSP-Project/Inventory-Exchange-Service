@@ -6,7 +6,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<string | { error: string }>
 ) {
-  foovar(req,res.statusCode);
+  foovar(req,res.statusCode); 
   if (req.method === 'GET') {
     const productId = req.query.id;
 

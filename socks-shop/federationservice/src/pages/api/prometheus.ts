@@ -1,28 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-const Prometheus = require('prom-client');
+
+import { prometheus } from '../../../prom.config'
 
 type Data = {
   name: string
 }
 
 // Prometheus.collectDefaultMetrics();
-export default async function handler(
+export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'GET') {
     console.log('Prometheus');
-    try {
-      const metrics = await Prometheus.register.metrics();
-    //Prometheus.register.metrics().then((metrics:string) => {
+    //const Prometheus = require('prom-client');
+    prometheus.register.metrics().then((metrics:string) => {
       console.log("metrics");
       console.log(metrics);
-      res.status(200).end(metrics);
-      //res.send();
-    //});
-    }
-    catch (error) {
-      console.log(error);
-      res.status(400).end("Error");}
+      res.status(200).write(metrics);
+      res.end();
+    });
   };
 };
