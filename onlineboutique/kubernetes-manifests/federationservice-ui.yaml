@@ -18,9 +18,9 @@ spec:
       containers:
       - name: federationservice-ui
         image: federationservice-ui
-        # env:
-        # - name: VITE_FEDERATION_SERVICE
-        #   value: federationservice-ui
+        env:
+        - name: VITE_FEDERATION_SERVICE
+          value: "http://federationservice-be:8091"
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
