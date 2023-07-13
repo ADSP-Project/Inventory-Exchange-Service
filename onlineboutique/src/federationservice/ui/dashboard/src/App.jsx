@@ -10,7 +10,9 @@ function App() {
   
   const [shops, setShops] = useState([]);
   console.log("HEJ!")
-  console.log(import.meta.env.VITE_FEDERATION_SERVICE)
+  console.log(FEDERATIONSERVICE_BE_SERVICE_HOST)
+  console.log(FEDERATIONSERVICE_BE_SERVICE_PORT)
+  console.log(VITE_FEDERATION_SERVICE)
 
   const MY_WEBHOOK_URL = `${import.meta.env.VITE_FEDERATION_SERVICE}/webhook`;
 
