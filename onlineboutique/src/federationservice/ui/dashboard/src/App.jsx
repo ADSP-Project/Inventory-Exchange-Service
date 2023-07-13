@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 function App() {
   
   const [shops, setShops] = useState([]);
+  console.log("HEJ!")
   console.log(import.meta.env.VITE_FEDERATION_SERVICE)
 
   const MY_WEBHOOK_URL = `${import.meta.env.VITE_FEDERATION_SERVICE}/webhook`;
