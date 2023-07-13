@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federationservice-ui
+  labels:
+    name: federationservice-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: federationservice-ui
+  template:
+    metadata:
+      labels:
+        name: federationservice-ui
+    spec:
+      containers:
+      - name: federationservice-ui
+        image: freefreep/ui:8
+        env:
+        - name: VITE_FEDERATION_SERVICE
+          value: federationservice-ui
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: federationservice-ui
+  labels:
+    name: federationservice-ui
+spec:
+  type: NodePort
+  ports:
+  - port: 5173
+    targetPort: 5173
+  selector:
+    name: federationservice-ui

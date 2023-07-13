@@ -28,7 +28,10 @@ resources:
  - redis.yaml
  - shippingservice.yaml
  - apiservice.yaml
- - federationservice.yaml
+ - federationservice-be.yaml
+ - federationservice-db.yaml
+ - federationservice-ui.yaml
+
 # components:
 # - ../kustomize/components/cymbal-branding
 # - ../kustomize/components/google-cloud-operations

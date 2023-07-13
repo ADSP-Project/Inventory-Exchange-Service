@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federationservice-db
+  labels:
+    name: federationservice-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: federationservice-db
+  template:
+    metadata:
+      labels:
+        name: federationservice-db
+    spec:
+      containers:
+      - name: federationservice-db
+        image: freefreep/db
+        env:
+          - name: DB_USER
+            value: user
+          - name: DB_PASSWORD
+            value: password
+          - name: DB_NAME
+            value: shop1
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: federationservice-db
+  labels:
+    name: federationservice-db
+spec:
+  #type: NodePort
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    name: federationservice-db

@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federationservice-be
+  labels:
+    name: federationservice-be
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: federationservice-be
+  template:
+    metadata:
+      labels:
+        name: federationservice-be
+    spec:
+      containers:
+      - name: federationservice-be
+        image: freefreep/be
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: federationservice-be
+  labels:
+    name: federationservice-be
+spec:
+  type: NodePort
+  ports:
+  - port: 8091
+    targetPort: 8091
+  selector:
+    name: federationservice-be
