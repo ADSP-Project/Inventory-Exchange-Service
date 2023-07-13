@@ -20,7 +20,7 @@ spec:
         image: federationservice-ui
         env:
         - name: VITE_FEDERATION_SERVICE
-          value: "http://${FEDERATIONSERVICE_BE_SERVICE_HOST}:8091"
+          value: "http://federationservice-be:8091"
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -31,7 +31,7 @@ metadata:
   labels:
     name: federationservice-ui
 spec:
-  #type: NodePort
+  type: ClusterIP
   ports:
   - port: 5173
     targetPort: 5173

@@ -28,7 +28,7 @@ metadata:
   labels:
     name: federationservice-be
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - port: 8091
     targetPort: 8091
