@@ -47,7 +47,7 @@ build:
   - image: apiservice
     context: src/apiservice
   - image: federationservice-ui
-    context: src/federationservice/ui
+    context: src/federationservice
     docker:
       dockerfile: Dockerfile-UI
   - image: federationservice-be
