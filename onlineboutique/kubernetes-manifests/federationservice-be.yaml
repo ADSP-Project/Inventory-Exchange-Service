@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: federationservice-be
-        image: freefreep/be
+        image: federationservice-be
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---

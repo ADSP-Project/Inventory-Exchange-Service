@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: federationservice-db
-        image: freefreep/db
+        image: federationservice-db
         env:
           - name: DB_USER
             value: user

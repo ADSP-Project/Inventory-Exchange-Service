@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
       - name: federationservice-ui
-        image: freefreep/ui:8
-        env:
-        - name: VITE_FEDERATION_SERVICE
-          value: federationservice-ui
+        image: federationservice-ui
+        # env:
+        # - name: VITE_FEDERATION_SERVICE
+        #   value: federationservice-ui
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
