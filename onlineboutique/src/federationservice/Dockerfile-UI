@@ -4,4 +4,11 @@ WORKDIR /app
 COPY ./ui/dashboard .
 RUN npm install
 EXPOSE 5173
+
+# Define the ARG instruction
+ARG PUBLIC_IP
+
+# Set the environment variable using the ARG value
+ENV PUBLIC_IP=$PUBLIC_IP
+
 CMD [ "npm","run","dev" ] 
