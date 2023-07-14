@@ -20,7 +20,7 @@ spec:
         image: federationservice-ui
         env:
         - name: VITE_FEDERATION_SERVICE
-          value: "http://34.140.241.93:8091"
+          value: "http://35.241.193.97:8091"
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
