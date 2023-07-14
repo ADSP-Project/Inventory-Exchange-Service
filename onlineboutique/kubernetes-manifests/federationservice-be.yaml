@@ -20,7 +20,7 @@ spec:
         image: federationservice-be
         env:
         - name: DB_HOST
-          value: "35.241.193.97"
+          value: "federationservice-db:5432"
         - name: DB_USER
           value: user
         - name: DB_PASSWORD
