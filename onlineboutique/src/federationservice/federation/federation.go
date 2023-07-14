@@ -26,7 +26,6 @@ func ExportPublicKeyAsPemStr(pubkey *rsa.PublicKey) string {
 	return PublicKey
 }
 
-
 func ExportPrivateKeyAsPemStr(privatekey *rsa.PrivateKey) string {
 	privatekey_pem := string(pem.EncodeToMemory(&pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(privatekey)}))
 	return privatekey_pem
@@ -36,7 +35,7 @@ func JoinFederation(shopName string, shopDescription string) *rsa.PrivateKey {
 	var privKey *rsa.PrivateKey
 	var err error
 	privateKeyFile := "private.pem"
-	
+
 	// Check if the key file already exists
 	if _, err := os.Stat(privateKeyFile); os.IsNotExist(err) {
 		// Key file doesn't exist, so we generate a new private key
@@ -81,7 +80,7 @@ func JoinFederation(shopName string, shopDescription string) *rsa.PrivateKey {
 
 	newShop := types.Shop{
 		Name:        shopName,
-		WebhookURL:  fmt.Sprintf("http://localhost:%s/webhook", os.Args[1]),
+		WebhookURL:  fmt.Sprintf("%s/webhook", os.Getenv("VITE_FEDERATION_SERVICE")),
 		PublicKey:   PublicKey,
 		Description: shopDescription,
 	}
@@ -115,7 +114,6 @@ func JoinFederation(shopName string, shopDescription string) *rsa.PrivateKey {
 
 	return privKey
 }
-
 
 func PollFederationServer() {
 	db := database.DbConn()
