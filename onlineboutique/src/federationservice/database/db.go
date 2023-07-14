@@ -21,6 +21,7 @@ func DbConn() (db *sql.DB) {
 	dbPass := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
 	dbHost := os.Getenv("DB_HOST")
+	log.Printf(dbHost)
 
 	dbInfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbUser, dbPass, dbName)
 

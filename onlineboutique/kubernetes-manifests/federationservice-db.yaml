@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,7 +19,7 @@ spec:
         image: federationservice-db
         env:
         - name: DB_HOST
-          value: "federationservice-db:5432"
+          value: federationservice-db
         - name: DB_USER
           value: user
         - name: DB_PASSWORD
