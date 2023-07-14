@@ -16,7 +16,6 @@ import (
 	"time"
 
 	"github.com/ADSP-Project/Federation-Service/database"
-	"github.com/ADSP-Project/Federation-Service/globals"
 	"github.com/ADSP-Project/Federation-Service/types"
 	_ "github.com/lib/pq"
 )
@@ -88,7 +87,7 @@ func JoinFederation(shopName string, shopDescription string) *rsa.PrivateKey {
 	log.Printf("New Shop Private Key is \n %s", privatekey_pem)
 	log.Printf("New Shop Public key is \n %s", newShop.PublicKey)
 
-	resp, err := http.PostForm(globals.AuthServer+"/login", url.Values{"name": {shopName}, "webhookURL": {newShop.WebhookURL}, "publicKey": {newShop.PublicKey}})
+	resp, err := http.PostForm(os.Getenv("AUTH_SERVER")+"/login", url.Values{"name": {shopName}, "webhookURL": {newShop.WebhookURL}, "publicKey": {newShop.PublicKey}})
 	if err != nil {
 		log.Fatal("Failed to authenticate with auth server")
 	}
@@ -100,7 +99,7 @@ func JoinFederation(shopName string, shopDescription string) *rsa.PrivateKey {
 	accessToken := result["access_token"]
 
 	jsonData, _ := json.Marshal(newShop)
-	req, err := http.NewRequest("POST", globals.FederationServer+"/shops", bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest("POST", os.Getenv("FEDERATION_SERVER")+"/shops", bytes.NewBuffer(jsonData))
 	req.Header.Set("Authorization", accessToken)
 
 	resp, err = http.DefaultClient.Do(req)
@@ -123,7 +122,7 @@ func PollFederationServer() {
 	for {
 		time.Sleep(10 * time.Second)
 
-		resp, err := http.Get(globals.FederationServer + "/shops")
+		resp, err := http.Get(os.Getenv("FEDERATION_SERVER") + "/shops")
 		if err != nil {
 			log.Printf("Failed to poll federation server: %v\n", err)
 			continue
