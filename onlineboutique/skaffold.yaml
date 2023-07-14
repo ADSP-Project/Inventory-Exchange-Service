@@ -58,6 +58,9 @@ build:
     context: src/federationservice
     docker: 
       dockerfile: Dockerfile-DB
+  env:
+    - name: PUBLIC_IP
+      value: ${PUBLIC_IP}
   tagPolicy:
     gitCommit: {}
   local:
