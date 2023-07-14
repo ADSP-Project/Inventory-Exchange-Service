@@ -38,6 +38,12 @@ COPY --from=builder /checkoutservice /src/checkoutservice
 # See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
 
+# Define the ARG instruction
+ARG PUBLIC_IP
+
+# Set the environment variable using the ARG value
+ENV PUBLIC_IP=$PUBLIC_IP
+
 EXPOSE 5050
 ENTRYPOINT ["/src/checkoutservice"]
 
