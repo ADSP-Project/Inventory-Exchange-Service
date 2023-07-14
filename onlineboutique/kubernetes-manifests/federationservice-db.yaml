@@ -19,7 +19,7 @@ spec:
         image: federationservice-db
         env:
         - name: DB_HOST
-          value: localhost
+          value: federationservice-db
         - name: DB_USER
           value: user
         - name: DB_PASSWORD
@@ -38,4 +38,4 @@ spec:
   - port: 5432
     targetPort: 5432
   selector:
-    name: federationservice-db
+    app: federationservice-db
