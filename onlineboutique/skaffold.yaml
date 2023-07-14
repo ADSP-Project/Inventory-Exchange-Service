@@ -33,6 +33,7 @@ build:
   - image: checkoutservice
     context: src/checkoutservice
     docker:
+      dockerfile: Dockerfile
       buildArgs:
           - PUBLIC_IP: "35.205.192.2"
   - image: paymentservice
