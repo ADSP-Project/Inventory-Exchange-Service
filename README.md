@@ -99,9 +99,10 @@ Start minikube clusters:
     # IMPORTANT!! When you want to change profile you have to write the command 
     kubectl config use-context <profile>
 
-IMPORTANT: Before you run the code you have to make a change on the IP address in the checkoutservice Dockerfile, change the ENV PUBLIC_IP to the public IP address of your virtual machine, otherwise the checkoutservice won't be able to send sock-shop requests. Same for federationservice-ui.yaml, change the VITE_FEDERATION_SERVICE to the public IP address of the virtual machine.
+IMPORTANT: Before you run the code you have to change all of the PUBLIC_IP environment variables to the public IP address of your virtual machine in the `skaffold.yaml` file located inside the onlineboutique folder. 
 
 To run the code:
+    
     # cd into Federdated-Marketplaces
     cd Federdated-Marketplaces
     

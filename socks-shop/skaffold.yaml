@@ -12,8 +12,6 @@ build:
   #  context: carts/docker/carts
   - image: nextjs-docker
     context: federationservice
-    buildArgs:
-        - PUBLIC_IP: "35.205.192.2"
   tagPolicy:
     gitCommit: {}
   local:
