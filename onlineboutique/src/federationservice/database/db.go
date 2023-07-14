@@ -25,8 +25,8 @@ func DbConn() (db *sql.DB) {
 
 	db, err = sql.Open(dbDriver, dbInfo)
 	if err != nil {
-		fmt.Println("Error with database")
-		fmt.Println(err.Error())
+		log.Printf("Error with database")
+		log.Printf(err.Error())
 		panic(err.Error())
 	}
 

@@ -116,6 +116,7 @@ func JoinFederation(shopName string, shopDescription string) *rsa.PrivateKey {
 }
 
 func PollFederationServer() {
+	log.Printf("PollFederationServer")
 	db := database.DbConn()
 	defer db.Close()
 
