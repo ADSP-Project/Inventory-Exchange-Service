@@ -32,7 +32,7 @@ RUN apk add --no-cache ca-certificates
 
 WORKDIR /src
 COPY --from=builder /checkoutservice /src/checkoutservice
-ENV PUBLIC_IP="34.77.229.231"
+ENV PUBLIC_IP="35.205.192.2"
 
 # Definition of this variable is used by 'skaffold debug' to identify a golang binary.
 # Default behavior - a failure prints a stack trace for the current goroutine.

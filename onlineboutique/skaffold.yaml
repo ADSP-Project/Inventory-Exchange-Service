@@ -46,6 +46,18 @@ build:
     context: src/adservice
   - image: apiservice
     context: src/apiservice
+  - image: federationservice-ui
+    context: src/federationservice
+    docker:
+      dockerfile: Dockerfile-UI
+  - image: federationservice-be
+    context: src/federationservice
+    docker:
+      dockerfile: Dockerfile-BE
+  - image: federationservice-db
+    context: src/federationservice
+    docker: 
+      dockerfile: Dockerfile-DB
   tagPolicy:
     gitCommit: {}
   local:

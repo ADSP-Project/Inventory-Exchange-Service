@@ -1,0 +1,6 @@
+node_modules
+.DS_Store
+go.mod
+go.sum
+.vscode
+/*.pem
