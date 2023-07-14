@@ -18,15 +18,6 @@ spec:
       containers:
       - name: federationservice-db
         image: federationservice-db
-        env:
-        - name: DB_HOST
-          value: "35.241.193.97"
-        - name: DB_USER
-            value: user
-        - name: DB_PASSWORD
-          value: password
-        - name: DB_NAME
-          value: shop1
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
