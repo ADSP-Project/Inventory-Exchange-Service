@@ -9,11 +9,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: federationservice-db
+      app: federationservice-db
   template:
     metadata:
       labels:
-        name: federationservice-db
+        app: federationservice-db
     spec:
       containers:
       - name: federationservice-db
@@ -37,7 +37,6 @@ metadata:
   labels:
     name: federationservice-db
 spec:
-  type: ClusterIP
   ports:
   - port: 5432
     targetPort: 5432
