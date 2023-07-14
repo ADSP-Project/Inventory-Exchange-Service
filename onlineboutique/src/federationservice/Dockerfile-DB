@@ -1,4 +1,4 @@
-FROM postgres:latest
+FROM postgres:13
 
 # Set environment variables
 ENV POSTGRES_USER user
@@ -7,5 +7,3 @@ ENV POSTGRES_DB federation_service
 
 # Copy initialization scripts to docker-entrypoint-initdb.d
 COPY init.sql /docker-entrypoint-initdb.d/
-
-EXPOSE 5432

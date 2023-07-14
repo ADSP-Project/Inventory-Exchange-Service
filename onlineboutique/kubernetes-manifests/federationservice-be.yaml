@@ -9,11 +9,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: federationservice-be
+      app: federationservice-be
   template:
     metadata:
       labels:
-        name: federationservice-be
+        app: federationservice-be
     spec:
       containers:
       - name: federationservice-be
@@ -27,8 +27,6 @@ spec:
           value: password
         - name: DB_NAME
           value: federation_service
-      nodeSelector:
-        beta.kubernetes.io/os: linux
 ---
 apiVersion: v1
 kind: Service

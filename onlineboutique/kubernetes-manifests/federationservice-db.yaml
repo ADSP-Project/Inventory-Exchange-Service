@@ -19,15 +19,13 @@ spec:
         image: federationservice-db
         env:
         - name: DB_HOST
-          value: federationservice-db
+          value: localhost
         - name: DB_USER
           value: user
         - name: DB_PASSWORD
           value: password
         - name: DB_NAME
           value: federation_service
-      nodeSelector:
-        beta.kubernetes.io/os: linux
 ---
 apiVersion: v1
 kind: Service

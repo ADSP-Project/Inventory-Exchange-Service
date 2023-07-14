@@ -9,11 +9,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: federationservice-ui
+      app: federationservice-ui
   template:
     metadata:
       labels:
-        name: federationservice-ui
+        app: federationservice-ui
     spec:
       containers:
       - name: federationservice-ui
