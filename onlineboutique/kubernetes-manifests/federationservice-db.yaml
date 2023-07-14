@@ -18,14 +18,19 @@ spec:
       - name: federationservice-db
         image: federationservice-db
         env:
-        - name: DB_HOST
-          value: localhost
         - name: DB_USER
           value: user
         - name: DB_PASSWORD
           value: password
         - name: DB_NAME
           value: federation_service
+        volumeMounts:
+        - name: config-volume
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: config-volume
+        configMap:
+          name: postgresql-config
 ---
 apiVersion: v1
 kind: Service

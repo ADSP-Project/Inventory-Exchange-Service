@@ -28,6 +28,7 @@ resources:
  - redis.yaml
  - shippingservice.yaml
  - apiservice.yaml
+ - configmap.yaml
  - federationservice-be.yaml
  - federationservice-db.yaml
  - federationservice-ui.yaml
