@@ -20,7 +20,7 @@ spec:
         image: federationservice-be
         env:
         - name: DB_HOST
-          value: "federationservice-db:5432"
+          value: "federationservice-db.default.svc.cluster.local:5432"
         - name: DB_USER
           value: user
         - name: DB_PASSWORD
