@@ -60,6 +60,8 @@ build:
     context: src/federationservice
     docker:
       dockerfile: Dockerfile-BE
+      buildArgs:
+        PUBLIC_IP: "35.205.192.2"
   - image: federationservice-db
     context: src/federationservice
     docker: 
