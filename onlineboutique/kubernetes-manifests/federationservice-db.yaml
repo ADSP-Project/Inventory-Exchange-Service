@@ -20,13 +20,13 @@ spec:
         image: federationservice-db
         env:
         - name: DB_HOST
-          value: "${FEDERATIONSERVICE_DB_SERVICE_HOST}:5432"
+          value: "federationservice-db:5432"
         - name: DB_USER
           value: user
         - name: DB_PASSWORD
           value: password
         - name: DB_NAME
-          value: shop1
+          value: federation_service
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
