@@ -4,4 +4,10 @@ COPY . .
 RUN go mod init github.com/ADSP-Project/Federation-Service
 RUN go mod tidy
 RUN go mod download
+
+ARG PUBLIC_IP
+ENV PUBLIC_IP=$PUBLIC_IP
+ENV FEDERATION_SERVER="http://$PUBLIC_IP:5433"
+ENV AUTH_SERVER="http://$PUBLIC_IP:8463"
+
 ENTRYPOINT ["go", "run", "shop.go", "8091", "shop", "dasdasd"]
