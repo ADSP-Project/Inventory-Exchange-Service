@@ -87,6 +87,7 @@ func JoinFederation(shopName string, shopDescription string) *rsa.PrivateKey {
 	log.Printf("New Shop Private Key is \n %s", privatekey_pem)
 	log.Printf("New Shop Public key is \n %s", newShop.PublicKey)
 
+	log.Printf(os.Getenv("AUTH_SERVER") + "/login")
 	resp, err := http.PostForm(os.Getenv("AUTH_SERVER")+"/login", url.Values{"name": {shopName}, "webhookURL": {newShop.WebhookURL}, "publicKey": {newShop.PublicKey}})
 	if err != nil {
 		log.Fatal("Failed to authenticate with auth server")
