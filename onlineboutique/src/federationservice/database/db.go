@@ -20,8 +20,9 @@ func DbConn() (db *sql.DB) {
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
+	dbHost := os.Getenv("DB_HOST")
 
-	dbInfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", dbUser, dbPass, dbName)
+	dbInfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbUser, dbPass, dbName)
 
 	db, err = sql.Open(dbDriver, dbInfo)
 	if err != nil {
