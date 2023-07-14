@@ -35,7 +35,7 @@ build:
     docker:
       dockerfile: Dockerfile
       buildArgs:
-          - PUBLIC_IP: "35.205.192.2"
+          PUBLIC_IP: "35.205.192.2"
   - image: paymentservice
     context: src/paymentservice
   - image: currencyservice
@@ -55,7 +55,7 @@ build:
     docker:
       dockerfile: Dockerfile-UI
       buildArgs:
-        - PUBLIC_IP: "35.205.192.2"
+        PUBLIC_IP: "35.205.192.2"
   - image: federationservice-be
     context: src/federationservice
     docker:
