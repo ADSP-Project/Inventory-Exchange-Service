@@ -36,4 +36,4 @@ spec:
   - port: 5173
     targetPort: 5173
   selector:
-    name: federationservice-ui
+    app: federationservice-ui
