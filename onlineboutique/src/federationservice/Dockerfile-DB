@@ -5,6 +5,9 @@ ENV POSTGRES_USER user
 ENV POSTGRES_PASSWORD password
 ENV POSTGRES_DB federation_service
 
+# Empty existing data directory
+RUN rm -rf /var/lib/postgresql/data/*
+
 # Copy initialization scripts to docker-entrypoint-initdb.d
 COPY init.sql /docker-entrypoint-initdb.d/
 
@@ -13,3 +16,4 @@ USER root
 RUN chown -R postgres:postgres /var/lib/postgresql/data
 RUN chmod 700 /var/lib/postgresql/data
 USER postgres
+
