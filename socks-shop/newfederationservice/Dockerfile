@@ -1,17 +1,15 @@
 FROM golang:1.20.4-alpine as builder
-
 WORKDIR /src
 
+# restore dependencies
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-RUN go build -o /go/bin/newfederationservice .
+RUN go build -o /go/bin/federationservice .
 
 WORKDIR /src
-COPY --from=builder /go/bin/newfederationservice /src/server
+COPY --from=builder /go/bin/federationservice /src/server
 
 EXPOSE 3000
 ENTRYPOINT ["/src/server"]
-
-# CMD ["./app"]
