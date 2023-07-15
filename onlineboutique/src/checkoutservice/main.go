@@ -355,7 +355,7 @@ func getExternalProduct(id string) (bool, error) {
 	_, realId := s[0], s[1]
 	publicIP := os.Getenv("PUBLIC_IP")
 	fmt.Println(publicIP)
-	enpoint := fmt.Sprintf("http://%s:%s/api/getproduct?id=%s", publicIP, "3000", realId)
+	enpoint := fmt.Sprintf("http://%s:%s/api/getproduct/%s", publicIP, "3000", realId)
 	fmt.Println(enpoint)
 	response, err := http.Get(enpoint)
 	if err != nil {
