@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
 
-type Product struct {
+type InternalProduct struct {
 	ID          string  `json:"id"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
@@ -17,6 +18,14 @@ type Product struct {
 	Count       int     `json:"count"`
 	ImageURL1   string  `json:"picture1"`
 	ImageURL2   string  `json:"picture2"`
+}
+
+type ExternalProduct struct {
+	ID          string  `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	Picture     string  `json:"picture"`
 }
 
 type ExternalOrderData struct {
@@ -104,9 +113,9 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	var products []Product
+	var products []ExternalProduct
 	for rows.Next() {
-		var product Product
+		var product InternalProduct
 		err := rows.Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Count, &product.ImageURL1, &product.ImageURL2)
 		if err != nil {
 			log.Println("Error scanning row:", err)
@@ -114,7 +123,14 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		products = append(products, product)
+		var externalProduct ExternalProduct
+		externalProduct.ID = "SKSH:" + product.ID
+		externalProduct.Name = product.Name
+		externalProduct.Description = strings.Replace(product.Description, "'", "'\\'", -1)
+		externalProduct.Price = product.Price
+		externalProduct.Picture = "static/" + product.ImageURL1
+
+		products = append(products, externalProduct)
 	}
 
 	err = rows.Err()
