@@ -57,7 +57,7 @@ type ExternalOrderItem struct {
 
 func getProductHandler(w http.ResponseWriter, r *http.Request) {
 	productID := mux.Vars(r)["id"]
-
+	log.Println("root:fake_password@tcp(catalogue-db:3306)/socksdb")
 	db, err := sql.Open("mysql", "root:fake_password@tcp(catalogue-db:3306)/socksdb")
 	if err != nil {
 		log.Println("Error connecting to DB:", err)
