@@ -8,9 +8,9 @@ RUN go mod download
 
 # Build the application
 COPY . .
-RUN go build -o /go/bin/federationservice
+RUN go build -o /go/bin/newfederationservice
 
 # Set the entrypoint and expose the port
 EXPOSE 3000
-ENTRYPOINT ["/go/bin/federationservice"]
+ENTRYPOINT ["/go/bin/newfederationservice"]
 
