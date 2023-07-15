@@ -59,7 +59,7 @@ func getProductHandler(w http.ResponseWriter, r *http.Request) {
 
 	row := db.QueryRow("SELECT * FROM sock WHERE sock_id = ?", productID)
 	var product Product
-	err = row.Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Count, &product.ImageURL)
+	err = row.Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Count, &product.ImageURL1, &product.ImageURL2)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "Product not found", http.StatusNotFound)
