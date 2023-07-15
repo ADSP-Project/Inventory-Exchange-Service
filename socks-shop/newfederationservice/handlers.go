@@ -126,7 +126,7 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 		var externalProduct ExternalProduct
 		externalProduct.ID = "SKSH:" + product.ID
 		externalProduct.Name = product.Name
-		externalProduct.Description = strings.Replace(product.Description, "'", "'\''", -1)
+		externalProduct.Description = strings.Replace(product.Description, `'`, `'\''`, -1)
 		externalProduct.Price = product.Price
 		externalProduct.Picture = "/static" + product.ImageURL1
 
