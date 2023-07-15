@@ -1,15 +1,16 @@
-FROM golang:1.20.4-alpine
+FROM golang:1.14.4-alpine
+
 WORKDIR /src
 
-# restore dependencies
+# Restore dependencies
 COPY go.mod go.sum ./
 RUN go mod download
+
+# Build the application
 COPY . .
+RUN go build -o /go/bin/federationservice
 
-RUN go build -o /go/bin/federationservice .
-
-WORKDIR /src
-COPY --from=builder /go/bin/federationservice /src/server
-
+# Set the entrypoint and expose the port
 EXPOSE 3000
-ENTRYPOINT ["/src/server"]
+ENTRYPOINT ["/go/bin/federationservice"]
+
