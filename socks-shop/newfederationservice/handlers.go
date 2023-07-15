@@ -15,7 +15,8 @@ type Product struct {
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
 	Count       int     `json:"count"`
-	ImageURL    string  `json:"picture"`
+	ImageURL1   string  `json:"picture1"`
+	ImageURL2   string  `json:"picture2"`
 }
 
 type ExternalOrderData struct {
@@ -106,7 +107,7 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 	var products []Product
 	for rows.Next() {
 		var product Product
-		err := rows.Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Count, &product.ImageURL)
+		err := rows.Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Count, &product.ImageURL1, &product.ImageURL2)
 		if err != nil {
 			log.Println("Error scanning row:", err)
 			http.Error(w, "Internal server error", http.StatusInternalServerError)
