@@ -108,6 +108,7 @@ func getProductHandler(w http.ResponseWriter, r *http.Request) {
 		requestCount.WithLabelValues(r.Method, r.URL.Path, "200").Inc()
 		w.WriteHeader(http.StatusOK)
 	} else {
+		requestCount.WithLabelValues(r.Method, r.URL.Path, "404").Inc()
 		http.Error(w, "Product not available", http.StatusBadRequest)
 	}
 }
