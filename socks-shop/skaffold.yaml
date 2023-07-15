@@ -10,8 +10,12 @@ build:
   # https://skaffold.dev/docs/concepts/#image-repository-handling
   #- image: carts
   #  context: carts/docker/carts
-  - image: nextjs-docker
-    context: federationservice
+  #- image: nextjs-docker
+  #  context: federationservice
+  - image: federationservice
+    context: newfederationservice
+    docker:
+      dockerfile: Dockerfile
   tagPolicy:
     gitCommit: {}
   local:

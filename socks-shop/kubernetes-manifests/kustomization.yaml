@@ -5,8 +5,9 @@ resources:
 - carts.yaml
 - catalogue-db.yaml
 - catalogue.yaml
+- federationservice.yaml
 - front-end.yaml
-- nextjs-docker.yaml
+#- nextjs-docker.yaml
 - orders-db.yaml
 - orders.yaml
 - payment.yaml

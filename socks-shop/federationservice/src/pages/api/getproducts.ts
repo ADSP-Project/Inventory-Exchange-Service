@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import connection from '../../utils/db'
 
+
 type Data = {
   name: string
 }
@@ -27,7 +28,6 @@ export default function handler(
         return;
       }
       console.log('Connection established');
-      console.log('Coming here')
 
       // Transform the response structure
       const modifiedResults = results.map((product: any) => {
@@ -39,8 +39,7 @@ export default function handler(
           price: product.price,
         };
       });
-
-      res.status(200).json(modifiedResults)
+      res.status(200).json(modifiedResults);
     });
   }
 }

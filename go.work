@@ -6,4 +6,5 @@ use (
 	./onlineboutique/src/productcatalogservice
 	./onlineboutique/src/shippingservice
 	./onlineboutique/src/checkoutservice
+	./socks-shop/newfederationservice
 )
