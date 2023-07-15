@@ -27,8 +27,8 @@ COPY . .
 ARG SKAFFOLD_GO_GCFLAGS
 RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /checkoutservice .
 
-#FROM alpine:3.17.3@sha256:124c7d2707904eea7431fffe91522a01e5a861a624ee31d03372cc1d138a3126 as without-grpc-health-probe-bin
-#RUN apk add --no-cache ca-certificates
+FROM alpine:3.17.3@sha256:124c7d2707904eea7431fffe91522a01e5a861a624ee31d03372cc1d138a3126 as without-grpc-health-probe-bin
+RUN apk add --no-cache ca-certificates
 
 WORKDIR /src
 COPY --from=builder /checkoutservice /src/checkoutservice
@@ -38,5 +38,17 @@ COPY --from=builder /checkoutservice /src/checkoutservice
 # See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
 
+# Define the ARG instruction
+ARG PUBLIC_IP
+
+# Set the environment variable using the ARG value
+ENV PUBLIC_IP=$PUBLIC_IP
+
 EXPOSE 5050
 ENTRYPOINT ["/src/checkoutservice"]
+
+FROM without-grpc-health-probe-bin
+# renovate: datasource=github-releases depName=grpc-ecosystem/grpc-health-probe
+ENV GRPC_HEALTH_PROBE_VERSION=v0.4.18
+RUN wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+    chmod +x /bin/grpc_health_probe
