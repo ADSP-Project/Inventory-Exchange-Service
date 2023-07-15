@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 type InternalProduct struct {
@@ -55,6 +56,20 @@ type ExternalOrderData struct {
 	Items              []ExternalOrderItem `json:"items"`
 }
 
+var (
+	requestCount = prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Name: "http_request_total",
+			Help: "Total number of HTTP requests",
+		},
+		[]string{"method", "route", "status"},
+	)
+)
+
+func init() {
+	prometheus.MustRegister(requestCount)
+}
+
 func getProductHandler(w http.ResponseWriter, r *http.Request) {
 	productID := mux.Vars(r)["id"]
 	log.Println("root:fake_password@tcp(catalogue-db:3306)/socksdb")
@@ -90,6 +105,7 @@ func getProductHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		log.Println("Count updated successfully")
+		requestCount.WithLabelValues(r.Method, r.URL.Path, "200").Inc()
 		w.WriteHeader(http.StatusOK)
 	} else {
 		http.Error(w, "Product not available", http.StatusBadRequest)
@@ -139,7 +155,7 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
-
+	requestCount.WithLabelValues(r.Method, r.URL.Path, "200").Inc()
 	json.NewEncoder(w).Encode(products)
 }
 
@@ -163,5 +179,6 @@ func orderHandler(w http.ResponseWriter, r *http.Request) {
 		Message: "Order processed successfully",
 	}
 
+	requestCount.WithLabelValues(r.Method, r.URL.Path, "200").Inc()
 	json.NewEncoder(w).Encode(response)
 }
