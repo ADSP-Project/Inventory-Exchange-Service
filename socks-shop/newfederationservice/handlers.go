@@ -67,7 +67,7 @@ func getProductHandler(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	row := db.QueryRow("SELECT * FROM sock WHERE sock_id = ?", productID)
-	var product Product
+	var product InternalProduct
 	err = row.Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Count, &product.ImageURL1, &product.ImageURL2)
 	if err != nil {
 		if err == sql.ErrNoRows {
