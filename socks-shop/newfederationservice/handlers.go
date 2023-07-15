@@ -28,31 +28,31 @@ type ExternalProduct struct {
 	Picture     string  `json:"picture"`
 }
 
-type ExternalOrderData struct {
-	OrderID            string              `json:"orderId"`
-	ShippingTrackingID string              `json:"shippingTrackingId"`
-	ShippingCost       ExternalMoney       `json:"shippingCost"`
-	ShippingAddress    ExternalAddress     `json:"shippingAddress"`
-	Items              []ExternalOrderItem `json:"items"`
-}
-
 type ExternalMoney struct {
-	CurrencyCode string `json:"CurrencyCode"`
-	Units        int    `json:"Units"`
-	Nanos        int    `json:"Nanos"`
+	CurrencyCode string
+	Units        int64
+	Nanos        int32
 }
 
 type ExternalAddress struct {
-	StreetAddress string `json:"streetAddress"`
+	StreetAddress string `json:"street_address"`
 	City          string `json:"city"`
 	State         string `json:"state"`
 	Country       string `json:"country"`
-	ZipCode       int    `json:"zipCode"`
+	ZipCode       int32  `json:"zip_code"`
 }
 
 type ExternalOrderItem struct {
-	Item string        `json:"item"`
+	ID   string        `json:"item"`
 	Cost ExternalMoney `json:"cost"`
+}
+
+type ExternalOrderData struct {
+	OrderId            string              `json:"order_id"`
+	ShippingTrackingId string              `json:"shipping_tracking_id"`
+	ShippingCost       ExternalMoney       `json:"shipping_cost"`
+	ShippingAddress    ExternalAddress     `json:"shipping_address"`
+	Items              []ExternalOrderItem `json:"items"`
 }
 
 func getProductHandler(w http.ResponseWriter, r *http.Request) {
@@ -126,7 +126,7 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 		var externalProduct ExternalProduct
 		externalProduct.ID = "SKSH:" + product.ID
 		externalProduct.Name = product.Name
-		externalProduct.Description = strings.Replace(product.Description, `'`, `\'`, -1)
+		externalProduct.Description = strings.Replace(product.Description, "'", `'\''`, -1)
 		externalProduct.Price = product.Price
 		externalProduct.Picture = "/static" + product.ImageURL1
 
@@ -144,6 +144,7 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func orderHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.Body)
 	var orderData ExternalOrderData
 	err := json.NewDecoder(r.Body).Decode(&orderData)
 	if err != nil {
