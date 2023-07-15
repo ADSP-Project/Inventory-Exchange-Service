@@ -152,6 +152,8 @@ func orderHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println(orderData)
+
 	// Process the order data...
 
 	response := struct {
