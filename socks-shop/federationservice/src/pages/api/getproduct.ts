@@ -1,12 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import connection from '../../utils/db';
-import {foovar} from './prom';
 
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<string | { error: string }>
 ) {
-  foovar(req,res.statusCode); 
   if (req.method === 'GET') {
     const productId = req.query.id;
 

@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federationservice
+  labels:
+    name: federationservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: federationservice
+  template:
+    metadata:
+      labels:
+        name: federationservice
+    spec:
+      containers:
+      - name: federationservice
+        image: federationservice
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: federationservice
+  #annotations:
+  #      prometheus.io/scrape: 'true'
+  labels:
+    name: federationservice
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 3000
+    nodePort: 30000
+  selector:
+    name: federationservice
