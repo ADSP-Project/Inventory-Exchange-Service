@@ -82,7 +82,8 @@ Install git and repo:
     sudo apt install git-all
     
     git clone https://github.com/ADSP-Project/Federdated-Marketplaces.git
-    cd Federdated-Marketplaces
+
+    git clone https://github.com/ADSP-Project/Federation-Hub.git
 
 Start minikube clusters:
 
@@ -90,23 +91,36 @@ Start minikube clusters:
     
     minikube start --memory 8192 --cpus 4 --profile sock-shop
 
+    minikube start --profile hub
+
     # Verify by listing profiles:
     minikube profile list
 
     # IMPORTANT!! When you want to change profile you have to write the command 
     kubectl config use-context <profile>
 
-IMPORTANT: Before you run the code you have to make a change on the IP address in the checkoutservice Dockerfile, change the ENV PUBLIC_IP to the public IP address of your virtual machine, otherwise the checkoutservice won't be able to send sock-shop requests.
+IMPORTANT: Before you run the code you have to change all of the PUBLIC_IP environment variables to the public IP address of your virtual machine in the `skaffold.yaml` file located inside the onlineboutique folder. 
 
 To run the code:
-
+    
+    # cd into Federdated-Marketplaces
+    cd Federdated-Marketplaces
+    
     # cd into socks-shop
+    cd socks-shop
     kubectl config use-context sock-shop
     skaffold run
 
     #cd into onlineboutique
+    cd ../onlineboutique
     kubectl config use-context online-boutique
     skaffold run
+
+    # cd into Federation-Hub
+    kubectl config use-context hub
+    cd ../../Federation-Hub/
+    skaffold run
+    
 
 To stop code:
 
@@ -126,6 +140,8 @@ Expose ports:
     kubectl port-forward deployment/frontend --address 0.0.0.0 8080:8080 &
     kubectl port-forward deployment/apiservice --address 0.0.0.0 9090:9090 &
     kubectl port-forward deployment/productcatalogservice --address 0.0.0.0 3560:3560 &
+    kubectl port-forward deployment/federationservice-ui --address 0.0.0.0 5173:5173 &
+    kubectl port-forward deployment/federationservice-be --address 0.0.0.0 8091:8091 & 
 
 To get logs from pod:
 

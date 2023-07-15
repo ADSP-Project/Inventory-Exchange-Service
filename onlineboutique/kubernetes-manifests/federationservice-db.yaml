@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federationservice-db
+  labels:
+    name: federationservice-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: federationservice-db
+  template:
+    metadata:
+      labels:
+        app: federationservice-db
+    spec:
+      containers:
+      - name: federationservice-db
+        image: federationservice-db
+        env:
+        - name: DB_HOST
+          value: federationservice-db
+        - name: DB_USER
+          value: user
+        - name: DB_PASSWORD
+          value: password
+        - name: DB_NAME
+          value: federation_service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: federationservice-db
+  labels:
+    name: federationservice-db
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    app: federationservice-db

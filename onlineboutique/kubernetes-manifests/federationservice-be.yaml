@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federationservice-be
+  labels:
+    name: federationservice-be
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: federationservice-be
+  template:
+    metadata:
+      labels:
+        app: federationservice-be
+    spec:
+      containers:
+      - name: federationservice-be
+        image: federationservice-be
+        env:
+        - name: DB_HOST
+          value: federationservice-db
+        - name: DB_USER
+          value: user
+        - name: DB_PASSWORD
+          value: password
+        - name: DB_NAME
+          value: federation_service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: federationservice-be
+  labels:
+    name: federationservice-be
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8091
+    targetPort: 8091
+  selector:
+    app: federationservice-be

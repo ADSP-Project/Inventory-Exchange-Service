@@ -32,6 +32,10 @@ build:
     context: src/shippingservice
   - image: checkoutservice
     context: src/checkoutservice
+    docker:
+      dockerfile: Dockerfile
+      buildArgs:
+          PUBLIC_IP: "35.205.192.2"
   - image: paymentservice
     context: src/paymentservice
   - image: currencyservice
@@ -46,6 +50,22 @@ build:
     context: src/adservice
   - image: apiservice
     context: src/apiservice
+  - image: federationservice-ui
+    context: src/federationservice
+    docker:
+      dockerfile: Dockerfile-UI
+      buildArgs:
+        PUBLIC_IP: "35.205.192.2"
+  - image: federationservice-be
+    context: src/federationservice
+    docker:
+      dockerfile: Dockerfile-BE
+      buildArgs:
+        PUBLIC_IP: "35.205.192.2"
+  - image: federationservice-db
+    context: src/federationservice
+    docker: 
+      dockerfile: Dockerfile-DB
   tagPolicy:
     gitCommit: {}
   local:

@@ -28,12 +28,7 @@ ENV GOTRACEBACK=single
 ARG PUBLIC_IP
 
 # Set the environment variable using the ARG value
-ENV PUBLIC_IP="34.140.69.148"
-
-# Install grpc-health-probe
-ARG GRPC_HEALTH_PROBE_VERSION=v0.4.18
-RUN wget -qO/bin/grpc_health_probe "https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64" && \
-    chmod +x /bin/grpc_health_probe
+ENV PUBLIC_IP=$PUBLIC_IP
 
 EXPOSE 5050
 ENTRYPOINT ["/src/checkoutservice"]
