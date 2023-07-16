@@ -13,4 +13,4 @@ ENV FEDERATION_SERVER="http://34.159.243.99/"
 ENV AUTH_SERVER="http://34.159.243.99/auth/"
 ENV VITE_FEDERATION_SERVICE="http://$PUBLIC_IP:8093"
 
-CMD [ "npm","run","dev" ] 
+CMD [ "npm","run","dev","--","--port","5174"] 
