@@ -1,38 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Federation Service Setup
+
+This repository contains the code for setting up a federated marketplace using Go and PostgreSQL.
+
+## Prerequisites
+
+- Go
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+   `git clone https://github.com/ADSP-Project/Federation-Service.git`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   `cd Federation-Service`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+2. Install dependencies:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+   - Make sure to initialize go.mod to manage dependencies:
+   
+      `go mod init github.com/ADSP-Project/Federation-Service`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+   - Fetch and arrange them into newly generated go.mod:
+   
+      `go mod tidy`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   - Finally, install the required dependencies with the following command:
+   
+      `go mod download`
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+3. Configure environment variables:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   - Rename the .env.example file to .env.
+   - Update the database credentials in the .env file to match your PostgreSQL setup.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4. If you set already Hub up, then you have your user already with a password. Connect to Postgres with `psql` and create new database 'federation_service':
 
-## Deploy on Vercel
+      `CREATE DATABASE federation_service;`
+   
+   Grant rights to your user:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+      `GRANT ALL PRIVILEGES ON DATABASE federation_service TO your_username;`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. Now connect as your user to DB for creating tables:
+   
+      `psql -d federation_service -U your_username`
+
+   Create tables `shops` and `partners`:
+
+      `CREATE TABLE shops ( id SERIAL PRIMARY KEY, name VARCHAR(255) UNIQUE, description VARCHAR(255), webhookURL VARCHAR(255), publicKey VARCHAR(1024));`
+
+      `CREATE TABLE partners ( shopId SERIAL PRIMARY KEY, shopName VARCHAR(255), canEarnCommission BOOLEAN, canShareInventory BOOLEAN, canShareData BOOLEAN, canCoPromote BOOLEAN, canSell BOOLEAN, requestStatus VARCHAR(1024));`
+
+6. Simulate a shop joining the federation:
+   - To simulate a shop joining the federation, open a new terminal and run the following command:
+
+     `go run shop.go [port] [name] [description]`
+
+     Replace `[port]` with the desired port number and `[name]` with the name of the shop.
+
+     This will start a shop server that automatically joins the federation by sending a POST request to the federation server.
+
+     **Important:** Hub and AuthServer from Federation-Hub should be running so that shop can join Federation.
+
+7. Additional Notes:
+   - You can run multiple instances of the shop server by providing different port numbers and shop names.

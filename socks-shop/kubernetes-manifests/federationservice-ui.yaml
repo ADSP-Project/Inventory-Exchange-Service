@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: federationservice-ui
+  labels:
+    name: federationservice-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: federationservice-ui
+  template:
+    metadata:
+      labels:
+        app: federationservice-ui
+    spec:
+      containers:
+      - name: federationservice-ui
+        image: federationservice-ui
+        # env:
+        # - name: VITE_FEDERATION_SERVICE
+        #   value: "http://PUBLIC_IP:8091"
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: federationservice-ui
+  labels:
+    name: federationservice-ui
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5174
+    targetPort: 5174
+  selector:
+    app: federationservice-ui

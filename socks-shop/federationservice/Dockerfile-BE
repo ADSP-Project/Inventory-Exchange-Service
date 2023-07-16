@@ -1,0 +1,18 @@
+FROM golang:1.18
+WORKDIR /app
+COPY . .
+RUN go mod init github.com/ADSP-Project/Federation-Service
+RUN go mod tidy
+RUN go mod download
+
+ARG PUBLIC_IP
+ENV PUBLIC_IP=$PUBLIC_IP
+#ENV FEDERATION_SERVER="http://$PUBLIC_IP:5433"
+#ENV AUTH_SERVER="http://$PUBLIC_IP:8463"
+
+ENV FEDERATION_SERVER="http://34.159.243.99/"
+ENV AUTH_SERVER="http://34.159.243.99/auth/"
+ENV VITE_FEDERATION_SERVICE="http://$PUBLIC_IP:8093"
+
+
+ENTRYPOINT ["go", "run", "shop.go", "8093", "Sock Shop", "Shops that sells socks."]
