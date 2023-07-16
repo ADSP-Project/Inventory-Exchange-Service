@@ -15,4 +15,4 @@ ENV AUTH_SERVER="http://34.159.243.99/auth"
 ENV VITE_FEDERATION_SERVICE="http://$PUBLIC_IP:8093"
 
 
-ENTRYPOINT ["go", "run", "shop.go", "8093", "Sock Shop", "Shops that sells socks."]
+ENTRYPOINT ["go", "run", "shop.go", "8093", "Sock Shop", "Socks"]
