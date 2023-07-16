@@ -18,9 +18,9 @@ spec:
       containers:
       - name: federationservice-ui
         image: federationservice-ui
-        env:
-        - name: VITE_FEDERATION_SERVICE
-          value: "http://PUBLIC_IP:8091"
+        # env:
+        # - name: VITE_FEDERATION_SERVICE
+        #   value: "http://PUBLIC_IP:8091"
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
