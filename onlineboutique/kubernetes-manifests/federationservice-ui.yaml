@@ -20,7 +20,7 @@ spec:
         image: federationservice-ui
         env:
         - name: VITE_FEDERATION_SERVICE
-          value: "http://${PUBLIC_IP}:8091"
+          value: "http://PUBLIC_IP:8091"
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
