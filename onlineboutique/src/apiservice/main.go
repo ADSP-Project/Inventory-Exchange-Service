@@ -46,9 +46,9 @@ func main() {
 	mustConnGRPC(ctx, &svc.productCatalogSvcConn, svc.productCatalogSvcAddr)
 
 	router := mux.NewRouter()
-	router.HandleFunc("/products", svc.productsHandler).Methods(http.MethodGet, http.MethodHead)
-	router.HandleFunc("/product/{id}", externalProductHandler).Methods(http.MethodGet, http.MethodHead)
-	router.HandleFunc("/order", postExternalOrder).Methods(http.MethodPost, http.MethodHead)
+	router.HandleFunc("/api/v1/products", svc.productsHandler).Methods(http.MethodGet, http.MethodHead)
+	router.HandleFunc("/api/v1/product/{id}", externalProductHandler).Methods(http.MethodGet, http.MethodHead)
+	router.HandleFunc("api/v1/order", postExternalOrder).Methods(http.MethodPost, http.MethodHead)
 	//router.Handle("/products", handlers.CreateProductHandler()).Methods("POST")
 	server := http.Server{
 		Addr:    ":9090",

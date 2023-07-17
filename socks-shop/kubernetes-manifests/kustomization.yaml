@@ -17,6 +17,6 @@ resources:
 - shipping.yaml
 - user-db.yaml
 - user.yaml
-- federationservice-be.yaml
-- federationservice-db.yaml
-- federationservice-ui.yaml
+# - federationservice-be.yaml
+# - federationservice-db.yaml
+# - federationservice-ui.yaml

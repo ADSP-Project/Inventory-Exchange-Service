@@ -23,7 +23,7 @@ func (fe *apiServer) productsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Add("content-type", "application/json")
-	w.WriteHeader(http.StatusFound)
+	w.WriteHeader(http.StatusOK)
 	w.Write(b)
 }
 
@@ -112,7 +112,7 @@ func externalProductHandler(w http.ResponseWriter, r *http.Request) {
 		// 	return
 		// }
 		w.Header().Add("content-type", "application/json")
-		w.WriteHeader(http.StatusFound)
+		w.WriteHeader(http.StatusOK)
 		response := Response{
 			Status:  "OK",
 			Message: "Request processed successfully.",

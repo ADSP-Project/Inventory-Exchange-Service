@@ -12,9 +12,9 @@ import (
 func main() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/api/getproduct/{id}", getProductHandler).Methods("GET")
-	router.HandleFunc("/api/getproducts", getProductsHandler).Methods("GET")
-	router.HandleFunc("/api/order", orderHandler).Methods("POST")
+	router.HandleFunc("/api/v1/product/{id}", getProductHandler).Methods("GET")
+	router.HandleFunc("/api/v1/products", getProductsHandler).Methods("GET")
+	router.HandleFunc("/api/v1/order", orderHandler).Methods("POST")
 	router.Handle("/metrics", promhttp.Handler())
 
 	log.Println("Server listening on port 3000")

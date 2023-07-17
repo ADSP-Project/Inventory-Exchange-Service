@@ -28,9 +28,9 @@ resources:
  - redis.yaml
  - shippingservice.yaml
  - apiservice.yaml
- - federationservice-be.yaml
- - federationservice-db.yaml
- - federationservice-ui.yaml
+#  - federationservice-be.yaml
+#  - federationservice-db.yaml
+#  - federationservice-ui.yaml
 
 # components:
 # - ../kustomize/components/cymbal-branding
