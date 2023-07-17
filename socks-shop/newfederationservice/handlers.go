@@ -25,6 +25,7 @@ type ExternalProduct struct {
 	ID          string  `json:"id"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
+	Count       int     `json:"count"`
 	Price       float64 `json:"price"`
 	Picture     string  `json:"picture"`
 }
@@ -145,6 +146,7 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 		externalProduct.Name = product.Name
 		externalProduct.Description = strings.Replace(product.Description, "'", `'\''`, -1)
 		externalProduct.Price = product.Price
+		externalProduct.Count = product.Count
 		externalProduct.Picture = "/static" + product.ImageURL1
 
 		products = append(products, externalProduct)
