@@ -147,48 +147,37 @@ public final class AdService {
   }
 
   private static ImmutableListMultimap<String, Ad> createAdsMap() {
-    Ad hairdryer =
+    Ad chuck =
         Ad.newBuilder()
-            .setRedirectUrl("/product/2ZYFJ3GM2N")
-            .setText("Hairdryer for sale. 50% off.")
+            .setRedirectUrl("/product/ONBQ:2ZYFJ3GM2N")
+            .setText("Chuck 70 Fall Tone for sale. 50% off.")
             .build();
-    Ad tankTop =
+    Ad alpha =
         Ad.newBuilder()
-            .setRedirectUrl("/product/66VCHSJNUP")
-            .setText("Tank top for sale. 20% off.")
+            .setRedirectUrl("/product/ONBQ:66VCHSJNUP")
+            .setText("Alpha Force 88 for sale. 20% off.")
             .build();
-    Ad candleHolder =
+    Ad newB =
         Ad.newBuilder()
-            .setRedirectUrl("/product/0PUK6V6EV0")
-            .setText("Candle holder for sale. 30% off.")
+            .setRedirectUrl("/product/ONBQ:0PUK6V6EV0")
+            .setText("New Balance 9060 for sale. 30% off.")
             .build();
-    Ad bambooGlassJar =
+    Ad gel =
         Ad.newBuilder()
-            .setRedirectUrl("/product/9SIQT8TOJO")
-            .setText("Bamboo glass jar for sale. 10% off.")
+            .setRedirectUrl("/product/ONBQ:1YMWWN1N4O")
+            .setText("Gel-NYC for sale.")
             .build();
-    Ad watch =
+    Ad samba =
         Ad.newBuilder()
-            .setRedirectUrl("/product/1YMWWN1N4O")
-            .setText("Watch for sale. Buy one, get second kit for free")
-            .build();
-    Ad mug =
-        Ad.newBuilder()
-            .setRedirectUrl("/product/6E92ZMYYFZ")
-            .setText("Mug for sale. Buy two, get third one for free")
-            .build();
-    Ad loafers =
-        Ad.newBuilder()
-            .setRedirectUrl("/product/L9ECAV7KIM")
-            .setText("Loafers for sale. Buy one, get second one for free")
+            .setRedirectUrl("/product/ONBQ:L9ECAV7KIM")
+            .setText("Samba OG for sale.")
             .build();
     return ImmutableListMultimap.<String, Ad>builder()
-        .putAll("clothing", tankTop)
-        .putAll("accessories", watch)
-        .putAll("footwear", loafers)
-        .putAll("hair", hairdryer)
-        .putAll("decor", candleHolder)
-        .putAll("kitchen", bambooGlassJar, mug)
+        .putAll("sneakers", chuck)
+        .putAll("sneakers", alpha)
+        .putAll("sneakers", newB)
+        .putAll("sneakers", gel)
+        .putAll("sneakers", samba)
         .build();
   }
 
