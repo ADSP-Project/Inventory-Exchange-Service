@@ -2,111 +2,75 @@
     "products": [
         {
             "id": "ONBQ:OLJCESPC7Z",
-            "name": "Sunglasses",
-            "description": "Add a modern touch to your outfits with these sleek aviator sunglasses.",
-            "picture": "/static/img/products/sunglasses.jpg",
+            "name": "Wmns Arizona SFB VL",
+            "description": "The women's Arizona SFB VL by Birkenstock is the ultimate summer sandal. It features a soft durable suede on the upper, combined with adjustable straps and a magical cork footbed that conforms to the shape of your foot. A truly custom fit is as effortless as the classic design.",
+            "picture": "/static/img/products/arizona.jpg",
             "priceUsd": {
                 "currencyCode": "USD",
-                "units": 19,
-                "nanos": 990000000
+                "units": 130,
+                "nanos": 0
             },
-            "categories": ["accessories"]
+            "categories": ["sandals"]
         },
         {
             "id": "ONBQ:66VCHSJNUP",
-            "name": "Tank Top",
-            "description": "Perfectly cropped cotton tank, with a scooped neckline.",
-            "picture": "/static/img/products/tank-top.jpg",
+            "name": "Alpha Force 88",
+            "description": "It's time to act as the Alpha in the Air, and the Force on the court with the reintroduction of the Nike Alpha Force 88, which was one of the very few sneakers that MJ wore that wasn't one of his beloved signature sneakers. The Alpha Force 88 returns in the classic White and Uni Red colourway, featuring a customizable strap and a textured leather upper.",
+            "picture": "/static/img/products/alpha.jpg",
             "priceUsd": {
                 "currencyCode": "USD",
-                "units": 18,
-                "nanos": 990000000
+                "units": 140,
+                "nanos": 0
             },
-            "categories": ["clothing", "tops"]
+            "categories": ["sneakers"]
         },
         {
             "id": "ONBQ:1YMWWN1N4O",
-            "name": "Watch",
-            "description": "This gold-tone stainless steel watch will work with most of your outfits.",
-            "picture": "/static/img/products/watch.jpg",
+            "name": "Gel-NYC",
+            "description": "Arriving just in time for the long-awaited summer season, the ASICS Gel-NYC takes inspiration from a number of classic ASICS styles, including the GEL-NIMBUS™ 3 and the MC-PLUS V design. The retro design on the upper paired with a combination of lightweight foams and GEL™ technology inserts ensure that this silhouette is stylish yet super comfortable.",
+            "picture": "/static/img/products/gel.jpg",
             "priceUsd": {
                 "currencyCode": "USD",
-                "units": 109,
-                "nanos": 990000000
+                "units": 129,
+                "nanos": 0
             },
-            "categories": ["accessories"]
+            "categories": ["sneakers"]
         },
         {
             "id": "ONBQ:L9ECAV7KIM",
-            "name": "Loafers",
-            "description": "A neat addition to your summer wardrobe.",
-            "picture": "/static/img/products/loafers.jpg",
+            "name": "Samba OG",
+            "description": "Once designed by Adi Dassler himself, to provide football players with the right footwear, the adidas Samba gave its debut at the end of the 1940s and has since then changed the game on and off the pitch. The latest version of the adidas Samba comes as an original copy of the ‘50s silhouette, made with a full-grain leather upper, suede overlays and flat panel stitching.",
+            "picture": "/static/img/products/samba.jpg",
             "priceUsd": {
                 "currencyCode": "USD",
-                "units": 89,
-                "nanos": 990000000
+                "units": 100,
+                "nanos": 0
             },
-            "categories": ["footwear"]
+            "categories": ["sneakers"]
         },
         {
             "id": "ONBQ:2ZYFJ3GM2N",
-            "name": "Hairdryer",
-            "description": "This lightweight hairdryer has 3 heat and speed settings. It's perfect for travel.",
-            "picture": "/static/img/products/hairdryer.jpg",
+            "name": "Chuck 70 Fall Tone",
+            "description": "The iconic Converse Chuck 70 has been updated to prepare you for the cooler weather, equipped with a fall-ready colourway combined with classic elements such as OrthoLite cushioning, the classic egret midsole and faux leather All Star patch, maintaining this silhouette's timeless look.",
+            "picture": "/static/img/products/chuck.jpg",
             "priceUsd": {
                 "currencyCode": "USD",
-                "units": 24,
-                "nanos": 990000000
+                "units": 90,
+                "nanos": 0
             },
-            "categories": ["hair", "beauty"]
+            "categories": ["sneakers"]
         },
         {
             "id": "ONBQ:0PUK6V6EV0",
-            "name": "Candle Holder",
-            "description": "This small but intricate candle holder is an excellent gift.",
-            "picture": "/static/img/products/candle-holder.jpg",
+            "name": "9060",
+            "description": "The New Balance 9060 nods to the iconic 99X series with a streamlined upper that pays homage to the era of 990s, while sporting a tongue logo inspired by the original 991 lace jewel. Crafted with a mix of mesh and suede, the bold sneaker has ABZORB and SBS cushioning. ",
+            "picture": "/static/img/products/9060.jpg",
             "priceUsd": {
                 "currencyCode": "USD",
-                "units": 18,
-                "nanos": 990000000
+                "units": 150,
+                "nanos": 0
             },
-            "categories": ["decor", "home"]
-        },
-        {
-            "id": "ONBQ:LS4PSXUNUM",
-            "name": "Salt & Pepper Shakers",
-            "description": "Add some flavor to your kitchen.",
-            "picture": "/static/img/products/salt-and-pepper-shakers.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 18,
-                "nanos": 490000000
-            },
-            "categories": ["kitchen"]
-        },
-        {
-            "id": "ONBQ:9SIQT8TOJO",
-            "name": "Bamboo Glass Jar",
-            "description": "This bamboo glass jar can hold 57 oz (1.7 l) and is perfect for any kitchen.",
-            "picture": "/static/img/products/bamboo-glass-jar.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 5,
-                "nanos": 490000000
-            },
-            "categories": ["kitchen"]
-        },
-        {
-            "id": "ONBQ:6E92ZMYYFZ",
-            "name": "Mug",
-            "description": "A simple mug with a mustard interior.",
-            "picture": "/static/img/products/mug.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 8,
-                "nanos": 990000000
-            },
-            "categories": ["kitchen"]
+            "categories": ["sneakers"]
         }
     ]
 }
